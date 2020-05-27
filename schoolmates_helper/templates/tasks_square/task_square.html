@@ -85,8 +85,7 @@
                                 <h3>{{ task.task_name }}</h3></a><br></div>
 
                             <div class="card-exceprt">
-                                <!--查到css可以实现只显示两行，现在这种因为用了p，前后距离大，前端或许能改-->
-                                <span style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{ task.task_sketch }}</span>
+                                <span style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;">{{ task.task_sketch }}</span>
                             </div>
                             <br/>
                             <br/>
@@ -111,7 +110,7 @@
     </div>
 <!--
     <div class="rightcolumn">
-        <!--一登录进去就是任务广场，含有其他按钮:个人中心、我要发布任务之类，链接加到这里
+        一登录进去就是任务广场，含有其他按钮:个人中心、我要发布任务之类，链接加到这里
         <div class="diamond"><a href={% url 'task_received:all_task_received' %}><h2>我接受的任务</h2></a></div>
         <div class="diamond"><a href="http://127.0.0.1:8000/task_released/un_acp"><h2>我发布的任务</h2></a></div>
         <div class="diamond"><a href={% url 'hunt:up0' %}><h2>我要发布任务</h2></a></div>

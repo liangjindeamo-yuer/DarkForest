@@ -192,9 +192,10 @@ def register(request):
         except:
             pass
         user.other = other
+
         try:
-            u_token = uuid.uuid4().hex
-            cache.set(u_token, user.id, timeout=60 * 60 * 24)
+            user.save()
+            u_token = str(user.id)
             send_email_activate(username, email, u_token)
         except:
             data = {
@@ -202,7 +203,6 @@ def register(request):
                 'status': HTTP_WRONG_EMALL,
             }
             return render(request, 'user/register.html', context=data)
-        user.save()
         return redirect(reverse('App:login'))
 
 
@@ -324,7 +324,7 @@ def logout(request):
 
 def activate(request):
     u_token = request.GET.get('u_token')
-    user_id = cache.get(u_token)
+    user_id = eval(u_token)
     if user_id:
         user = User.objects.get(pk=user_id)
         user.is_active = True
@@ -811,8 +811,7 @@ def modifyuser(request):
             user.is_active = 0
             if user.rank >= 1:
                 user.rank -= 1
-            u_token = uuid.uuid4().hex
-            cache.set(u_token, user.id, timeout=60 * 60 * 24)
+            u_token = str(user.id)
             send_email_activate(username, email, u_token)
         password = request.POST.get('password')
         if password:

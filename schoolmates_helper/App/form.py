@@ -15,7 +15,7 @@ class Task1(forms.ModelForm):
         fields = '__all__'
         # exclude用于禁止模型字段转换表单字段
         exclude = ['is_pickedup', 'hunter', 'reason', 'is_finished', 'comment_hunter', 'comment_publisher',
-                   'contact_hunter','is_overtime','contact_type_hunter']
+                   'contact_hunter', 'is_overtime', 'contact_type_hunter']
         labels = {
             'task_name': '任务名',
             'task_file': '相关文件（选填）',
@@ -103,8 +103,10 @@ class User1(forms.ModelForm):
         pwd1 = self.cleaned_data.get('password')
 
         pwd2 = self.cleaned_data.get('repassword')
-
+        p = str(pwd1)
         if pwd1 != pwd2:
             raise forms.ValidationError('密码输入不一致')
+        elif len(p) < 6:
+            raise forms.ValidationError('密码最短六位')
         else:
             return self.cleaned_data

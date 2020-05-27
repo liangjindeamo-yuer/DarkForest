@@ -15,11 +15,11 @@
         <property name="yearIsDateType" value="false" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="db" uuid="1776cc34-aa65-4dc3-a548-2b112f4f24ae">
+    <data-source source="LOCAL" name="db" uuid="60b22165-eee9-457b-9b7c-485a65b44da4">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:D:\Desktop\courseware\schoolmates_helper\db.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:D:\Desktop\schoolmates_helper\db.sqlite3</jdbc-url>
       <driver-properties>
         <property name="enable_load_extension" value="true" />
       </driver-properties>

@@ -127,6 +127,7 @@ def un_acp(request):
     if request.method == 'GET':
         id2 = request.session['mclass']
         id1 = request.session['user_id']
+        request.session['flag']=True
         user = User.objects.get(pk=id1)
         missions = Task.objects.filter(publisher_id=user)
         paginator = Paginator(missions,12,3)
@@ -184,7 +185,7 @@ def f_mission(request):
     mission.save()
     request.session['id'] = id1
 
-    return redirect("/task_released/comment/")
+    return redirect("/task_released/comment")
 
 
 @csrf_exempt
@@ -208,7 +209,7 @@ def d_mission(request):
     task.hunter = None
     task.save()
     request.session['id'] = id1
-    return redirect("/task_released/reason/")
+    return redirect("/task_released/reason")
 
 # 问题：应该就只能一个任务对应一个reason？大概要改一下。
 @csrf_exempt
@@ -229,11 +230,18 @@ def reason(request):
 
 
 def d_unacpm(request):
-    id1 = request.GET.get("id")
-    mission = Task.objects.get(pk=id1)
-    mission.delete()
-
-    return redirect("/task_released/finish/")
+    b = request.session['flag']
+    b = bool(1-b)
+    request.session['flag'] = b
+    if not b:
+        id1 = request.GET.get("id")
+        request.session['id'] = id1
+        return render(request,'task_released/ensure.html')
+    elif b:
+        id1 = request.session['id']
+        mission = Task.objects.get(pk=id1)
+        mission.delete()
+        return redirect("/task_released/un_acp")
 
 
 def m_detail(request):
@@ -249,41 +257,73 @@ def m_detail(request):
 
 @csrf_exempt
 def m_change(request):
+    id1 = request.GET.get("id")
+    request.session['id'] = id1
+    mission = Task.objects.get(pk=id1)
+    type = mission.task_type.typename
+    context = {
+        "mission": mission,
+        "type": type
+    }
+    return render(request, 'task_released/m_change.html', context=context)
+
+
+@csrf_exempt
+def change_one(request):
     if request.method == 'GET':
-        id1 = request.GET.get("id")
-        request.session['id'] = id1
+        mdl = request.GET.get("mdl")
+        id1 = request.session['id']
         mission = Task.objects.get(pk=id1)
         type = mission.task_type.typename
         context = {
             "mission": mission,
-            "type": type
+            "type": type,
+            "mdl": mdl
         }
-        return render(request, 'task_released/m_change.html', context=context)
+        return render(request, 'task_released/change_one.html', context=context)
     elif request.method == 'POST':
         id1 = request.session['id']
         Data = request.POST.get('Data')
         m1 = request.POST.get('m1')
         l = request.POST.get('task_type')
         c = request.POST.get('task_contact')
+        z = 0
+        if c == "0":
+            z = 1
+        elif c == "1":
+            z = 2
+        elif c == "2":
+            z = 3
+        elif c == "3":
+            z = 4
+        elif c == "4":
+            z = 5
         d = request.POST.get('task_sketch')
         g = request.POST.get('g')
         file = request.FILES.get('task_file')
-        destination = open(os.path.join("D:/Schoolmates_Helper/untitled20/static/uploads",file.name),'wb+')
-        for chunk in file.chunks():
-            destination.write(chunk)
-        destination.close()
+        if file is not None:
+            destination = open(os.path.join(settings.BASE_DIR,'static','uploads',file.name),'wb+')
+            for chunk in file.chunks():
+                destination.write(chunk)
+            destination.close()
         mission = Task.objects.get(pk=id1)
-        type = TaskType.objects.get(pk=l)
-        mission.ddltime = Data
-        mission.task_name = m1
-        mission.task_type = type
-        mission.task_sketch = d
-        mission.task_reward = g
-        mission.task_file = file.name
-
-        mission.contact_type_publisher = Contact.objects.get(pk=c)
+        if l is not None:
+            type = TaskType.objects.get(pk=l)
+            mission.task_type = type
+        if Data is not None:
+            mission.ddltime = Data
+        if m1 is not None:
+            mission.task_name = m1
+        if d is not None:
+            mission.task_sketch = d
+        if g is not None:
+            mission.task_reward = g
+        if file is not None:
+            mission.task_file = file.name
+        if z != 0:
+            mission.contact_type_publisher = Contact.objects.get(pk=z)
         mission.save()
-        return redirect("/task_released/un_acp/")
+        return redirect("/task_released/un_acp")
 
 
 def download(request):
@@ -293,3 +333,4 @@ def download(request):
     response['Content-Type'] = 'application/octet-stream'
     response['Content-Disposition'] = 'attachment;filename ='+name.encode('utf-8').decode('ISO-8859-1')
     return response
+

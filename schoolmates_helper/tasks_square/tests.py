@@ -124,7 +124,6 @@ class ViewsTest(TestCase):
         session.session_data = SessionStore().encode(newsession)
         session.save()
         '''
-
-        #c.post('/task_square/discuss/1/', { 'discussion': "讨论测试用例1"})
-        #discussion = Discuss.objects.get(task_id=1)
-        #self.assertEqual(discussion.discuss, '讨论测试用例1')
+        c.post('/task_square/discuss/1/', {'discussion': '讨论测试用例1'})
+        discussion = Discuss.objects.get(task_id=1)
+        self.assertEqual(discussion.discuss, '讨论测试用例1')

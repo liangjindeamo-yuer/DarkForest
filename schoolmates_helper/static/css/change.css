@@ -58,37 +58,89 @@ body {
 /* 激活 */
 
 .topnav a.active {
-    background-color: white;
+    background-color: rgb(160, 160, 151);
     color: black;
 }
 
 
-/* 创建两列 */
 
 
-/* Left column */
-
-.leftcolumn {
-    float: left;
-    width: 50%;
+.change{
+    float:left;
+    margin-left:50px;
+    position:relative;
+    height:650px;
 }
 
-/* 右侧栏 */
-.rightcolumn {
-    float: left;
-    width: 50%;
-    padding-left: 20px;
-}
 
+.link{
+    text-decoration: none;
+    color:black;
+}
+.link:hover{
+    color:black;
+}
 
 
 
 /* 文章卡片效果 */
 
-.card {
-    background-color: white;
-    padding: 20px;
+div[class^="card"]{
+    background-color: rgba(255,255,255,0.3);
+    padding: 10px;
+    float:left;
+    box-shadow: 5px 5px 10px 5px rgba(0,0,0,0.5);
     margin-top: 20px;
+    margin-right: 20px;
+    position:absolute;
+}
+.card1{
+    width:160px;
+    height:180px;
+    top: 70px;
+    left: 50px;
+}
+.card2{
+    width:160px;
+    height:220px;
+    top: 30px;
+    left: 230px;
+}
+.card3{
+    width:200px;
+    height:170px;
+    top: 80px;
+    left: 410px;
+}
+.card4{
+    width:130px;
+    height:170px;
+    top: 270px;
+    left: 80px;
+}
+.card5{
+    width:160px;
+    height:200px;
+    top: 270px;
+    left: 230px;
+}
+.card6{
+    width:250px;
+    height:170px;
+    top: 270px;
+    left: 410px;
+}
+.card7{
+    width:110px;
+    height:40px;
+    top: 580px;
+    left: 520px;
+}
+.card8{
+    width:300px;
+    height:500px;
+    top: 30px;
+    left: 700px;
 }
 input[type=text] {
     outline: none;
@@ -120,9 +172,10 @@ input[type=date] {
     text-decoration: none;
     margin: 4px 2px;
     cursor: pointer;
+    height:40px;
 }
 input[type=submit] {
-    background: #1e7db9;
+    background: rgba(111, 170, 185,0.5);
     padding: 5px 10px 6px;
     color: #fff;
     text-decoration: none;
@@ -136,6 +189,61 @@ input[type=submit] {
     border-bottom: 1px solid #222;
     position: relative;
     cursor: pointer;
+}
+.select {
+    display: inline-block;
+    width: 300px;
+    height:40px;
+    position: relative;
+    vertical-align: middle;
+    padding: 0;
+    overflow: hidden;
+    background-color: #fff;
+    color: #555;
+    border: 1px solid #aaa;
+    text-shadow: none;
+    border-radius: 4px;
+    transition: box-shadow 0.25s ease;
+    z-index: 2;
+}
+
+.select:hover {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.select:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: #ccc;
+    top: 14px;
+    right: 10px;
+    cursor: pointer;
+    z-index: -2;
+}
+.select select {
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.select select:focus {
+    outline: none;
+}
+.summary {
+    width: 300px;
+    height: 150px;
+    resize: none;
+    font-size: 18px;
+    border: solid thin #AAAAAA;
+    border-radius: 5px;
 }
 
 /* 列后面清除浮动 */
@@ -147,7 +255,25 @@ input[type=submit] {
 }
 /* 连接按钮 */
 .button {
-   background: #1e7db9;
+   background-color: rgba(91, 158, 185, 0.7);
+    padding: 5px 10px 6px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-box-shadow: 0 1px 3px #999;
+    -webkit-box-shadow: 0 1px 3px #999;
+    text-shadow: 0 -1px 1px #222;
+    border-bottom: 1px solid #222;
+    position: absolute;
+    bottom:5px;
+    transform: translate(-50%,0);
+    cursor: pointer;
+}
+/* 连接按钮 */
+.buttonsp {
     padding: 5px 10px 6px;
     color: #fff;
     text-decoration: none;
@@ -163,11 +289,3 @@ input[type=submit] {
     cursor: pointer;
 }
 
-/* 底部 */
-
-.footer {
-    padding: 20px;
-    text-align: center;
-    background: #ddd;
-    margin-top: 20px;
-}

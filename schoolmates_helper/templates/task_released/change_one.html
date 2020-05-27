@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我发布的任务</title>
+    <link rel="stylesheet" type="text/css" href="/../../static/css/change.css">
+</head>
+<body>
+    <div class="header">
+    <h1>Dark Forest</h1>
+    <h3>个人中心</h3>
+    <p>我发布的任务</p>
+</div>
+
+<div class="topnav">
+    <a style="margin-left: 100px;" href={% url 'tasks_square:task_square' %}>任务广场</a>
+    <a href={% url 'hunt:up0' %}>我要发布</a>
+    <a class="active" href={% url 'hunt:edit' %}>个人中心</a>
+    <a href="#" style="float:right"><img src="/../../static/image/user_center.png" width="35px" height="35px"
+                                         alt="user center"></a>
+</div>
+<div class="change" style="width:90%; text-align: center">
+    <h1>修改</h1>
+    <div class="form-group">
+        {% if mdl == "2" or mdl == "8"%}
+            <label for="task_contact_input">希望的联系方式:</label>
+            <select class="select" name="task_contact" style="width: 10rem;">
+                {% if mission.publisher.email != Null %}
+                    <option value=0 {% if mission.contact_type_publisher.type_id == 1 %} selected="selected" {% endif %}>email</option>
+                {% endif %}
+                {% if mission.publisher.qq != Null %}
+                    <option value=1 {% if mission.contact_type_publisher.type_id == 2 %} selected="selected" {% endif %}>qq</option>
+                {% endif %}
+                {% if mission.publisher.wechat != Null %}
+                    <option value=2 {% if mission.contact_type_publisher.type_id == 3 %} selected="selected" {% endif %}>wechat</option>
+                {% endif %}
+                {% if mission.publisher.tel != Null %}
+                    <option value=3 {% if mission.contact_type_publisher.type_id == 4 %} selected="selected" {% endif %}>tel</option>
+                {% endif %}
+                {% if mission.publisher.other != Null %}
+                    <option value=4 {% if mission.contact_type_publisher.type_id == 5 %} selected="selected" {% endif %}>other</option>
+                {% endif %}
+            </select>
+            <span style="color:grey">（只能选择个人资料中已保存的联系方式）</span>
+        {% endif %}
+    </div>
+
+    <form enctype="multipart/form-data" method="post">
+        {% if mdl == "3" or mdl == "8"%}
+            截止日期:<input type="date" name="Data" placeholder={{ mission.task_time }}>
+        {% endif %}
+            <div class="form-group">
+            {% if mdl == "4" or mdl == "8"%}
+                <label for="task_type_input">任务类型:</label>
+                <select class="select" name="task_type" style="width: 10rem;">
+                    <option value=1 {% if mission.task_type.type_id == 1 %} selected="selected" {% endif %}>快递服务</option>
+                    <option value=2 {% if mission.task_type.type_id == 2 %} selected="selected" {% endif %}>修理服务</option>
+                    <option value=3 {% if mission.task_type.type_id == 3 %} selected="selected" {% endif %}>课业指导</option>
+                    <option value=4 {% if mission.task_type.type_id == 4 %} selected="selected" {% endif %}>邂逅表白</option>
+                    <option value=5 {% if mission.task_type.type_id == 5 %} selected="selected" {% endif %}>其他服务</option>
+                </select>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {% if mdl == "5" or mdl == "8"%}
+                <label for="task_sketch_input">任务简介:</label>
+                <textarea class="summary" rows="3" class="form-control" placeholder={{mission.task_sketch}}
+                    name="task_sketch"></textarea>
+            {% endif %}
+        </div>
+        {% if mdl == "1" or mdl == "8"%}
+            任务名:<input type="text" name="m1" placeholder={{ mission.task_name }}>
+        {% endif %}
+        {% if mdl == "6" or mdl == "8"%}
+            酬金（元）:<input type="number" name="g" placeholder={{ mission.task_reward }}>
+        {% endif %}
+        <div class="form-group">
+            {% if mdl == "7" or mdl == "8"%}
+                <label for="task_file_input">任务附件:</label>
+                <input type="file" name="task_file" placeholder={{ mission.task_file }}>
+            {% endif %}
+        </div>
+    <br/>
+        <input type="submit" name="Submit" value="提交">
+    <br/>
+     <br/>
+        <a class="buttonsp" href="/task_released/m_change/?id={{ mission.id }}">返回</a>
+        <br/>
+    </form>
+</div>
+</body>
+</html>
