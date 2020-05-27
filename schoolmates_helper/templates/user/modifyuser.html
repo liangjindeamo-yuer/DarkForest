@@ -1,0 +1,153 @@
+{% extends 'base_main.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'Schoolmateshelper/main/css/mine.css' %}">
+{% endblock %}
+
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'Schoolmateshelper/user/js/modifyuser.js' %}">
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container" style="position:relative;padding: 1.6rem 0;">
+        <form method="post" enctype="multipart/form-data" action="{% url 'App:modifyuser' %}" onsubmit="return check()">
+
+            {% csrf_token %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">用户名</h3>
+                </div>
+                <div class="panel-body">
+                    {{ user.username }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="username_input">新用户名</label>
+                <input type="text" class="form-control" id="username_input" placeholder="{{ user.username }}"
+                       name="username">
+                <span id="username_info"></span>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">交大邮箱</h3>
+                </div>
+                <div class="panel-body">
+                    {{ user.email }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email_input">新邮箱</label>
+                <input type="email" class="form-control" id="email_input" placeholder="{{ user.email }}" name="email">
+                <span id="email_info"></span>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">原密码</h3>
+                </div>
+                <div class="panel-body">
+                    {{ user.password }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password_input">新密码</label>
+                <input type="password" class="form-control" id="password_input" placeholder="{{ user.password }}"
+                       name="password">
+                <span id="password_info"></span>
+            </div>
+            <div class="form-group">
+                <label for="password_confirm_input">确认密码</label>
+                <input type="password" class="form-control" id="password_confirm_input"
+                       placeholder="{{ user.password }}"
+                       name="password_confirm">
+                <span id="password_confirm_info"></span>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">QQ</h3>
+                </div>
+                <div class="panel-body">
+                    {{ user.qq }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="username_input">new QQ</label>
+                <input type="text" class="form-control" id="QQ_input" placeholder="{{ user.qq }}"
+                       name="QQ">
+                <span id="QQ_info"></span>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">微信</h3>
+                </div>
+                <div class="panel-body">
+                    {{ user.wechat }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="username_input">new wechat</label>
+                <input type="text" class="form-control" id="wechat_input" placeholder="{{ user.wechat }}"
+                       name="wechat">
+                <span id="wechat_info"></span>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">手机号</h3>
+                </div>
+                <div class="panel-body">
+                    {{ user.tel }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="tel_input">新手机号</label>
+                <input type="text" class="form-control" id="tel_input" placeholder="{{ user.tel }}"
+                       name="tel">
+                <span id="tel_info"></span>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">其它联系方式</h3>
+                </div>
+                <div class="panel-body">
+                    {{ user.other }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="other_input">新其它联系方式</label>
+                <input type="text" class="form-control" id="other_input" placeholder="{{ user.other }}"
+                       name="other">
+                <span id="other_info"></span>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">原头像</h3>
+                </div>
+                <span class="panel-body">
+                    <img style="width: 2rem;height: 2rem;border-radius: 50%;" src="/static/uploads/{{ user.icon }}" alt="{{ user.username }}">
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label for="icon_input">新头像</label>
+                <input type="file" id="icon_input" name="icon">
+                <span id="icon_info"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-block">确认修改</button>
+
+        </form>
+        <a href="{% url 'App:mine' %}" style="font-size: large">
+            <span class="glyphicon glyphicon-share-alt" style="color: blue"></span>
+            <span style="color: blue">返回</span>
+        </a>
+    </div>
+{% endblock %}

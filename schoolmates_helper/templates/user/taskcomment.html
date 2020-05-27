@@ -1,0 +1,109 @@
+{% extends 'base_main.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'Schoolmateshelper/user/css/alltask_hunter.css' %}"
+          xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+{% endblock %}
+
+
+
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'js/swiper.jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Schoolmateshelper/user/js/alltask_publisher.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="alltask">
+        <aside>
+            <ul>
+                <li>
+                    <a href="{% url 'App:comment' 0 4 %}">
+                        全部任务
+                    </a>
+                    {% ifequal  typeid   0 %}
+                        <span class="yellowSlide"></span>
+                    {% endifequal %}
+                </li>
+                {% for tasktype in tasktypes %}
+                    <li>
+                        <a href="{% url 'App:comment' tasktype.type_id 4 %}">{{ tasktype.typename }}</a>
+                        {% ifequal  tasktype.type_id  typeid %}
+                            <span class="yellowSlide"></span>
+                        {% endifequal %}
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'App:mine' %}" style="font-size: large">
+                <span class="glyphicon glyphicon-share-alt" style="color: blue"></span>
+                <span style="color: blue">返回</span>
+            </a>
+        </aside>
+
+        <section>
+            <nav>
+                <ul>
+                    <li>
+                        <span>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success ">{{ sort }}</button>
+                            <button type="button" class="btn btn-success dropdown-toggle " data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-chevron-down"></span>
+                            </button>
+                            <ul class="dropdown-menu" id="all_sort">
+                                <li style="width:5.0rem;margin-bottom: 0.05rem;"><a
+                                        href="{% url 'App:comment' typeid 0 %}"
+                                        class="list-group-item list-group-item-success" id="我接受的">我接受的</a></li>
+                                <li style="width:5.0rem;margin-bottom: 0.05rem"><a
+                                        href="{% url 'App:comment' typeid 1 %}"
+                                        class="list-group-item list-group-item-success" id="我发布的">我发布的</a></li>
+                                <li style="width:5.0rem;"><a
+                                        href="{% url 'App:comment' typeid 4 %}"
+                                        class="list-group-item list-group-item-success" id="所有任务">所有任务</a></li>
+                            </ul>
+                        </div>
+                        </span>
+                    </li>
+                </ul>
+            </nav>
+            <menu>
+                <ul>
+                    {% for task in task_list %}
+                        <li>
+                            <a href="{% url 'App:taskcontent'  task.id %}" class="list-group-item">
+                                <h4 class="list-group-item-heading" style="color: darkorange;display: inline-block;
+                                text-align: center;vertical-align: center;line-height: 0.4rem;font-weight: 800;">
+                                    {{ task.task_name }}</h4><!--border: 1px solid orange; border-radius: 1000px;-->
+                                <div class="list-group-item-text">
+                                    <div>
+                                        详情：{{ task.task_sketch }}
+                                    </div>
+                                    <div style="float: left;display: inline">
+                                        委托人：{{ task.publisher.username }}
+                                        {% if task.comment_publisher %}
+                                            评价：{{ task.comment_publisher }}
+                                            {% else %}
+                                            暂未作出评价
+                                        {% endif %}
+                                        <br>
+                                        完成人：{{ task.hunter.username }}
+                                        {% if task.comment_hunter %}
+                                            评价：{{ task.comment_hunter }}
+                                            {% else %}
+                                            暂未作出评价
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </menu>
+
+        </section>
+    </div>
+{% endblock %}

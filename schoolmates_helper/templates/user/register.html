@@ -1,0 +1,93 @@
+{% extends 'base_user.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'Schoolmateshelper/user/css/register.css' %}">
+{% endblock %}
+
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'Schoolmateshelper/user/js/register.js' %}">
+    </script>
+    <script>
+        {% if status == 907 %}
+            alert('邮箱错误');
+        {% endif %}
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container" style="height:20rem;position:relative;overflow: auto;">
+        <form method="post" enctype="multipart/form-data" action="{% url 'App:register' %}" onsubmit="return check()">
+
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="username_input">用户名</label>
+                <input type="text" class="form-control" id="username_input" placeholder="请输入用户名" name="username">
+                <span id="username_info"></span>
+            </div>
+            <div class="form-group">
+                <label for="email_input">交大邮箱</label>
+                <input type="email" class="form-control" id="email_input" placeholder="请输入交大邮箱" name="email">
+                <span id="email_info"></span>
+            </div>
+            <div class="form-group">
+                <label for="password_input">密码</label>
+                <input type="password" class="form-control" id="password_input" placeholder="请输入密码" name="password">
+                <span id="password_info"></span>
+            </div>
+            <div class="form-group">
+                <label for="password_confirm_input">确认密码</label>
+                <input type="password" class="form-control" id="password_confirm_input" placeholder="请再次输入密码"
+                       name="password_confirm">
+                <span id="password_confirm_info"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="QQ_input">QQ(选填)</label>
+                <input type="text" class="form-control" id="QQ_input" placeholder="请输入您的QQ账号"
+                       name="QQ">
+                <span id="QQ_info"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="wechat_input">微信(选填)</label>
+                <input type="text" class="form-control" id="wechat_input" placeholder="请输入您的微信号"
+                       name="wechat">
+                <span id="wechat_info"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="tel_input">手机号(选填)</label>
+                <input type="text" class="form-control" id="tel_input" placeholder="请输入您的手机号"
+                       name="tel">
+                <span id="tel_info"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="other_input">其他联系方式(选填)</label>
+                <input type="text" class="form-control" id="other_input" placeholder="请输入您的其它联系方式"
+                       name="other">
+                <span id="other_info"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label for="icon_input">头像</label>
+                <input type="file" id="icon_input" name="icon">
+                <span id="icon_info"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-block">注册</button>
+
+        </form>
+        <a href="{% url 'App:home' %}" style="font-size: large">
+            <span class="glyphicon glyphicon-share-alt" style="color: blue"></span>
+            <span style="color: blue">返回</span>
+        </a>
+    </div>
+{% endblock %}

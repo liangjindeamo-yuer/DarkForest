@@ -1,0 +1,93 @@
+<!--继承自received_tasks_finished-->
+<!DOCTYPE html>
+<html>
+
+<head> 
+    <meta charset="utf-8">
+    <title>接受任务:未完成</title> 
+    <link rel="stylesheet" type="text/css" href="..\..\static\css\task_rec_style.css">
+</head>
+
+<body>
+<div class="header">
+    <h1>SCHOOL Helper</h1>
+    <p><b>我接受的任务</b></p>
+</div>
+
+<div class="topnav">
+    <a href={% url 'tasks_square:task_square' %} style="margin-left: 100px;">任务广场</a>
+    <a href={% url 'hunt:up0' %}>我要发布</a>
+    <a href={% url 'hunt:edit' %} class="active">个人中心</a>
+    <a href="#" style="float:right; margin-right: 100px;"><img src="..\..\static\image\user_center.png" width="35px"
+                                                               height="35px"></a>
+
+</div>
+
+<div id="navbar">
+    <h2>我接受的任务</h2>
+    <ul>
+        <li><a href={% url 'task_received:all_task_received' %}>全部</a></li>
+        <li><a href={% url 'task_received:received_tasks_not_finished' %} class="current-top">未完成</a></li>
+        <li><a href={% url 'task_received:received_tasks_finished' %}>已完成</a></li>
+        <li><a href={% url 'tasks_square:task_square' %}>回到任务广场</a></li>
+    </ul>
+</div>
+<div id="content">
+    <div id="menu">
+
+        <!--任务类别；选中哪个类别的任务，加粗显示现在是什么类别，这个没做出来-->
+        <!-- <b>任务类别</b> -->
+        <a href={% url 'task_received:received_tasks_not_finished' %}>全部</a>
+        {% for tasktype in task_types %}
+            {% if tasktype.pk == typeid_now %}
+                <a href={% url 'task_received:task_sometype_not_finished' tasktype.id %} class="current_menu">{{ tasktype.typename }}</a>
+            {% else %}
+                <a href={% url 'task_received:task_sometype_not_finished' tasktype.id %}>{{ tasktype.typename }}</a>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+
+    <b style="font-size: 30px; margin-left: 40%; margin-top: 20px;">任务列表</b>
+    {% for task in tasklist_sometype_not_finished %}
+        <div class="task_box">
+            <a href={% url 'task_received:task_detail' task.id %}>{{ task.task_name }}</a>
+            <!--加这个标签，让简介只显示两行简介：但是页面移位了？？？article可以换成p span等 但是都有问题-->
+            <p>任务简述：
+                <article
+                        style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{ task.task_sketch }}</article>
+            </p>
+            <div id="status">
+                <form action="{% url 'task_received:reasons_revoke' task.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="撤销任务"/>
+                </form>
+                <!--想弄再次确定弹框，点击确定后才跳转到评价页面，而不是直接确定-->
+                <form action="{% url 'task_received:task_finished' task.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="完成任务"/>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+    <!--2020年4月30日 swf 分页功能-->
+    <div class="pagination">
+    <span class="step-links">
+        {% if tasklist_sometype_not_finished.has_previous %}
+            <a href="?page={{ tasklist_sometype_not_finished.previous_page_number }}">上一页</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ tasklist_sometype_not_finished.number }} of {{ tasklist_sometype_not_finished.paginator.num_pages }}.
+        </span>
+
+        {% if tasklist_sometype_not_finished.has_next %}
+            <a href="?page={{ tasklist_sometype_not_finished.next_page_number }}">下一页</a>
+        {% endif %}
+    </span>
+    </div>
+</div>
+
+</body>
+
+</html>

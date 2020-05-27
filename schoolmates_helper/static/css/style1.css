@@ -1,0 +1,62 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+    height: 48px;
+}
+
+
+/* 导航条链接 */
+
+.topnav a {
+    float: left;
+    display: block;
+    width: 100px;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+
+/* 链接颜色修改 */
+
+.topnav a:hover:not(.active) {
+    background-color: #ddd;
+    color: black;
+}
+
+
+/* 激活 */
+
+.topnav a.active {
+    background-color: rgb(160, 160, 151);
+    color: black;
+}
+
+
+.header {
+    text-align: center;
+    padding-bottom: 50px;
+    padding-top: 30px;
+    background-image: url("../image/bg.png");
+}
+.header p {
+    margin-top: 10px;
+}
+
+body {
+    background-image: url("../image/bg_light.png");
+    background-size: cover;
+    margin-top: -20px;
+}
+
+release
+{
+    border: #333 solid 1px;
+}

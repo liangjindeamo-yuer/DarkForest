@@ -1,0 +1,144 @@
+<!--这个HTML，和app task_received 的all_task_received.html类似-->
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="utf-8">
+    <title>{{ username }}的任务广场</title> 
+    <link rel="stylesheet" type="text/css" href="/../../static/css/square.css">
+
+</head>
+<body>
+<div class="header">
+    <h1>Dark Forest</h1>
+    <h3>任务广场</h3>
+    <!--2020年4月30日 新增 swf 退出登录-->
+<div>
+    {% if username %}
+        <strong>Welcome,{{ username }}！</strong>
+        <a class="button" href={% url 'task_received:logout' %}>退出登录</a>
+    {% else %}
+        <strong>Welcome,游客!</strong>
+        <a class="button" href={% url 'hunt:login' %}>登录</a>
+        <a class="button" href={% url 'hunt:index' %}>注册</a>
+    {% endif %}
+    <br/>
+    <br/>
+</div>
+</div>
+
+<div class="topnav">
+    <a href={% url 'tasks_square:task_square' %} class="active" style="margin-left: 100px;">任务广场</a>
+    <a href={% url 'hunt:up0' %}>我要发布</a>
+    <a href={% url 'hunt:edit' %}>个人中心</a>
+    <a href="#" style="float:right"><img src="/../../static/image/user_center.png" width="35px" height="35px"
+                                         alt="user center"></a>
+
+</div>
+<br/>
+<br/>
+<!--可以把这几个放在一个下拉列表“排序方式”-->
+<div class="dropdown">
+    <button class="dropbtn">{% if ordername == id %}默认排序{% endif %}{{ ordername }}</button>
+    <div class="dropdown-content">
+        <a href={% url 'tasks_square:task_square_sort' type_id 'id' %}>默认排序</a><br>
+        <a href={% url 'tasks_square:task_square_sort' type_id 'task_reward' %}>按酬劳升序</a><br>
+        <a href={% url 'tasks_square:task_square_sort' type_id '-task_reward' %}>按酬劳降序</a><br>
+        <a href={% url 'tasks_square:task_square_sort' type_id 'ddltime' %}>按截止时间升序</a><br>
+        <a href={% url 'tasks_square:task_square_sort' type_id '-ddltime' %}>按截止时间降序</a><br>
+    </div>
+</div>
+<!--2020年4月30日 swf 新增 关键词查找任务-->
+
+<form style="display: inline;" action="{% url 'tasks_square:findtasks' %}" method="post">
+    {% csrf_token %}
+    <label for="keywords"> </label>
+    <input class="buttonsp" type="submit" value="查询">
+    <input class="search" type="text" placeholder="请输入关键词" name="keywords" id="keywords">
+</form>
+<br/>
+<br/>
+<br/>
+<!-- 任务列表 -->
+<div class="row">
+    <div class="leftcolumn">
+        <div id="menu">
+            <!--任务类别；选中某类后，要能看出来是选中了这个选项-->
+            <ul>
+                <li><a href={% url 'tasks_square:task_square' %}><strong>全部任务类别</strong></a></li>
+                {% for tasktype in task_types %}
+                    <li><a {% if tasktype.typename == sort %} class="active"{% endif %}
+                                                              href={% url 'tasks_square:task_square_sort' tasktype.pk 'id' %}>{{ tasktype.typename }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="midcolumn">
+        <div id="content">
+            <ol>
+                {% if tasks %}
+                    {% for task in tasks %}
+                        <div class="card">
+                            <div class="card-date">截止时间：{{ task.task_time }}<br></div>
+                            <div class="card-title"><a style="text-decoration:none;color:black;"
+                                                       href={% url 'tasks_square:task_detail' task.id %}>
+                                <h3>{{ task.task_name }}</h3></a><br></div>
+
+                            <div class="card-exceprt">
+                                <!--查到css可以实现只显示两行，现在这种因为用了p，前后距离大，前端或许能改-->
+                                <span style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{ task.task_sketch }}</span>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div class="card-money">
+                                ¥&nbsp;{{ task.task_reward }}<br>
+                            </div>
+                            <br/>
+                            <div style="text-align: center;">
+                                <form action="{% url 'tasks_square:check_hunt' task.id %}" method="post">
+                                    {% csrf_token %}
+                                    <input class="card-button" type="submit" value="接受任务"/>
+                                </form>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <strong>暂无任务！</strong>
+                {% endif %}
+            </ol>
+        </div>
+    </div>
+<!--
+    <div class="rightcolumn">
+        <!--一登录进去就是任务广场，含有其他按钮:个人中心、我要发布任务之类，链接加到这里
+        <div class="diamond"><a href={% url 'task_received:all_task_received' %}><h2>我接受的任务</h2></a></div>
+        <div class="diamond"><a href="http://127.0.0.1:8000/task_released/un_acp"><h2>我发布的任务</h2></a></div>
+        <div class="diamond"><a href={% url 'hunt:up0' %}><h2>我要发布任务</h2></a></div>
+    </div>-->
+</div>
+
+<!--2020年4月30日 swf 分页功能-->
+<div class="pagination">
+    <span class="step-links">
+
+        {% if tasks.has_previous %}
+            <div class="arrowhead"><a href="?page={{ tasks.previous_page_number }}">上一页</a></div>
+        {% endif %}
+        <span class="current">
+            <strong>Page {{ tasks.number }} &#47; {{ tasks.paginator.num_pages }}</strong>
+        </span>
+        {% if tasks.has_next %}
+            <div class="arrowhead"><a href="?page={{ tasks.next_page_number }}">下一页</a></div>
+        {% endif %}
+
+    </span>
+</div>
+<div class="footer">
+   <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+</div>
+
+</body>
+</html>
+
+

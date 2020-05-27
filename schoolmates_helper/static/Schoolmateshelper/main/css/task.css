@@ -1,0 +1,20 @@
+footer .task span {
+    background: url(/static/img/task_selected.png) no-repeat;
+    background-size: 0.513889rem;
+}
+footer .task dd{
+    color: orange;
+}
+header{
+    height: 1.5rem;
+    background: yellow;
+    margin-bottom: 0.3rem;
+}
+#task {
+    padding: 1.5rem 0;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+    padding-bottom: 3rem;
+    position: fixed;
+}

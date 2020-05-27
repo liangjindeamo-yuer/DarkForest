@@ -1,0 +1,80 @@
+{% extends 'base_main.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'Schoolmateshelper/main/css/home.css' %}">
+{% endblock %}
+
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'js/swiper.jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Schoolmateshelper/main/js/home.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="home" style="width:100%;">
+        {# 首页顶部轮播 #}
+        <div class="swiper-container" id="topSwiper">
+            <div class="swiper-wrapper">
+                {% for main_wheel in main_wheels %}
+                    <div class="swiper-slide">
+                        <a href="https://www.sjtu.edu.cn/">
+                            <img src="{{ main_wheel.img }}" alt="{{ main_wheel.name }}">
+                        </a>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+            <div class="swiper-pagination"></div>
+        </div>
+        <br>
+        <p align="center" style="font-size:20px;color:#66ccff;font-family: 华文隶书,serif;">Schoolmates Helper 开启你我的便利之路</p>
+        <br>
+        <a class='' href="{% url 'App:register' %}">
+            <button class="btn btn-success btn-block" type="button">注册</button>
+        </a>
+        <br>
+        <a href="{% url 'App:login' %}">
+            <button class="btn btn-success btn-block" type="button">登录</button>
+        </a>
+        <br>
+        <br>
+
+        <a href="https://oc.sjtu.edu.cn/login/canvas"
+           style="display: inline-block;width: 49%;text-align: center;overflow: hidden;">
+            <dl>
+                <dt>
+                    <span style="display: inline-block;">
+                        <img src="/static/img/canvas.png" alt="canvas" style="width: 4rem;height: 4rem;">
+                    </span>
+                </dt>
+                <dd>canvas在线教学平台</dd>
+            </dl>
+        </a>
+        <a href="https://i.sjtu.edu.cn/"
+           style="display: inline-block;width: 49%;overflow: hidden;text-align: center;">
+            <dl>
+                <dt>
+                    <span style="display: inline-block;">
+                        <img src="/static/img/teach.png" alt="teach"
+                             style="width: 4rem;height: 4rem;">
+                    </span>
+                </dt>
+                <dd>上海交大教学信息服务网</dd>
+            </dl>
+        </a>
+        <p align="center" style="font-family: 华文楷体,serif;color: purple;font-size: large;"   >愿你拥有自由而无用的灵魂！</p>
+    </div>
+
+
+
+
+
+
+
+
+{% endblock %}
+

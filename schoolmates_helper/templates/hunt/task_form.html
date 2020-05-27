@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>我要发布</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="..\..\static\css\data_form.css">
+</head>
+
+<body>
+<div class="header">
+    <h1>Dark Forest</h1>
+    <p><b>我要发布</b></p>
+</div>
+<!--2020年4月30日 新增 swf 未登录显示 if-->
+
+<div class="topnav">
+    <a href={% url 'tasks_square:task_square' %} style="margin-left: 100px;">任务广场</a>
+    <a href={% url 'hunt:up0' %} class="active">我要发布</a>
+    <a href={% url 'hunt:edit' %}>个人中心</a>
+    <a href="#" style="float:right; margin-right: 100px;"><img src="..\..\static\image\user_center.png" width="35px"
+                                                               height="35px"></a>
+</div>
+<div class="submit">
+    <form action="" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        <table border="0">
+            <caption>
+                <h1>发布你的悬赏吧</h1>
+            </caption>
+            <tr>
+                <th><label for="id_contact_type_publisher">怎么联系到你呢<span style="color:red">*</span>:</label></th>
+                <td><div class="select"><select name="contact_type_publisher" id="id_contact_type_publisher">
+
+
+                    <option value="1">我的交大邮箱</option>
+
+                    <option value="2">QQ</option>
+
+                    <option value="3">微信</option>
+
+                    <option value="4">我的手机号</option>
+
+                    <option value="5">我注册时填的其他信息</option>
+
+                </select></div></td>
+            </tr>
+            <tr>
+                <th><label for="id_task_name">任务名<span style="color:red">*</span>:</label></th>
+                <td><input type="text" name="task_name" maxlength="32" required id="id_task_name"></td>
+            </tr>
+            <tr>
+                <th><label for="id_task_sketch">任务描述(不多于300字)<span style="color:red">*</span>:</label></th>
+                <td><textarea class="summary" name="task_sketch" maxlength="512" id="id_task_sketch"></textarea></td>
+            </tr>
+            <tr>
+                <th><label for="id_task_file">相关文件:</label></th>
+                <td><input type="file" name="task_file" id="id_task_file"></td>
+            </tr>
+            <tr>
+                <th><label for="id_task_type">任务类型:</label></th>
+                <td><div class="select"><select name="task_type" id="id_task_type">
+                    <option value="1">快递服务</option>
+
+                    <option value="2">修理服务</option>
+
+                    <option value="3">课业指导</option>
+
+                    <option value="4">邂逅表白</option>
+
+                    <option value="5" selected>其他类型</option>
+
+                </select></div></td>
+            </tr>
+            <tr>
+                <th><label for="id_task_time">截止时间<span style="color:red">*</span>:</label></th>
+                <td><input type="date" name="task_time" id="id_task_time" value="2021-09-03"></td>
+            </tr>
+            <tr>
+                <th><label for="id_task_reward">任务奖励(RMB)<span style="color:red">*</span>:</label></th>
+                <td><input type="number" name="task_reward" value="0" step="any" id="id_task_reward"></td>
+            </tr>
+
+        </table>
+        <div style="text-align: center"><input class="button" type="submit" value="提交"></div>
+
+    </form>
+    <br/><br/><br/><br/><br/><br/>
+</div>
+<div class="footer">
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+</div>
+{# 2020年5月9日 swf 改了冲突 #}
+
+
+
+</body>
+
+</html>

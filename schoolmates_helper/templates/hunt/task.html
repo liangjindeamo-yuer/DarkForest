@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发布任务</title>
+</head>
+<body>
+    <div class="container" id="task">
+        <form method="post" enctype="multipart/form-data" action="{% url 'hunt:up0' %}" onsubmit="return checktask()">
+
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="task_name_input">任务名称（必填）</label>
+                <input type="text" class="form-control" id="task_name_input" placeholder="请输入任务名称" name="task_name">
+                <span id="task_name_info"></span>
+            </div>
+            <div class="form-group">
+                <label for="ddltime_input">截止时间（必填，格式2020-06-01）</label>
+                <input type="text" class="form-control" id="ddltime_input" placeholder="请输入截止时间" name="ddltime">
+                <span id="task_name_info"></span>
+            </div>
+            <div class="form-group">
+                <label for="task_type_input">任务类型（必选）</label>
+                <select class="form-control" id="task_type_input" name="task_type" style="width: 10rem;">
+                    <option value=1>快递服务</option>
+                    <option value=2>修理服务</option>
+                    <option value=3>课业指导</option>
+                    <option value=4>邂逅表白</option>
+                    <option value=5>其他服务</option>
+                </select>
+                <span id="task_type_info"></span>
+            </div>
+            <div class="form-group">
+                <label for="task_sketch_input">任务简介</label>
+                <textarea rows="3" class="form-control" placeholder="请输入任务简介,以简单地描述你的任务(不超过200字)" id="task_sketch_input"
+                          name="task_sketch"></textarea>
+                <span id="task_skecth_info"></span>
+            </div>
+                        <div class="form-group">
+                <label>任务酬劳</label><br>
+                <input type="text" class="form-control" id="task_reward_input" placeholder="你想给你的委托者多少酬劳呢？" name="task_reward"
+                       style="width: 6rem;display: inline;">
+                <label>￥</label>
+                <br>
+                <span id="task_reward_info"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="task_file_input">任务附件</label>
+                <input type="file" id="task_file_input" name="task_file">
+                <span id="task_file_info"></span>
+            </div>
+
+            <button type="submit" class="btn btn-block btn-warning">发布任务</button>
+        </form>
+    </div>
+</body>
+</html>

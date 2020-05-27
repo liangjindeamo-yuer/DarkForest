@@ -1,0 +1,206 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+    height: 48px;
+}
+
+
+/* 导航条链接 */
+
+.topnav a {
+    float: left;
+    display: block;
+    width: 100px;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+
+/* 链接颜色修改 */
+
+.topnav a:hover:not(.active) {
+    background-color: #ddd;
+    color: black;
+}
+
+
+/* 激活 */
+
+.topnav a.active {
+    background-color: rgb(160, 160, 151);
+    color: black;
+}
+
+
+.header {
+    text-align: center;
+    padding-bottom: 50px;
+    padding-top: 30px;
+    background-image: url("../image/bg.png");
+}
+.header p {
+    margin-top: 10px;
+}
+
+body {
+    background-image: url("../image/bg_light.png");
+    background-size: cover;
+    margin-top: -20px;
+}
+
+#navbar {
+    float: left;
+    padding-top: 20px;
+    width: 15%;
+    margin-left: 10%;
+    background: rgba(0,0,0,.2);
+}
+
+#navbar h2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 40px;
+}
+
+#navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#navbar ul li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#navbar ul li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+#navbar ul li a:hover {
+    background-color: #555;
+    color: white;
+}
+
+.current-top {
+    border-right: #000 10px solid;
+}
+
+
+
+
+#content {
+    float: left;
+    background: #f1f1f8;
+    width: 60%;
+    padding-top: 20px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#content #menu 
+{
+    font-size: 20px;
+    padding: 10px;
+    margin-bottom: 40px;
+    margin-top: 20px;
+    margin-left: -10px;
+    margin-right: -20px;
+}
+
+#content #menu b 
+{
+    margin-left: 40px;
+    margin-right: 100px;
+    float: left;
+    font-size: 30px;
+}
+
+#content #menu a {
+    text-decoration: none;
+    color: #000;
+    display: block;
+    float: left;
+    border: solid 1px rgb(165, 140, 240);
+    border-top: solid 3px rgb(165, 140, 240);
+    border-bottom: solid 2px rgb(165, 140, 240);
+    width: 150px;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+#content #menu .current_menu 
+{
+    border-bottom-color: #f1f1f8;
+}
+
+.task_box {
+    background-image: linear-gradient(to right,  rgb(69, 146, 209, .3), rgba(149, 188, 221, 0.1));
+    margin-right: 50px;
+    margin-top: 50px;
+    border-radius: 20px;
+    border: solid 1px rgb(219, 209, 248);
+    box-shadow: 10px 10px 5px #888888;
+    padding: 10px;
+    padding-left: 20px;
+    height: 100px;
+}
+
+.task_box a {
+    float: left;
+    text-decoration: none;
+    display: block;
+    width: 100px;
+    margin-top: 30px;
+    color: black;
+    font-size: 25px;
+}
+
+.task_box a:hover {
+    color: rgb(105, 101, 96);
+    text-decoration: overline underline;
+}
+
+.task_box p {
+    float: left;
+    margin-left: 40px;
+}
+
+#status {
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+
+.task_box form input {
+    background-color: rgb(93, 128, 204);
+    border: 1px solid rgb(60, 65, 60);
+    color: white;
+    padding: 10px 24px;
+    cursor: pointer;
+    width: 100%;
+    display: block;
+    margin-right: 10px;
+    margin-top: 5px;
+    border-radius: 25px;
+}
+
+
+
+.task_box form input:hover {
+    background-color: #574eaa;
+}

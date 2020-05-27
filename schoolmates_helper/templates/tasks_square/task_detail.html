@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>任务详情</title> 
+    <link rel="stylesheet" type="text/css" href="/../../static/css/detail.css">
+</head>
+<body>
+<div class="header">
+    <h1>Dark Forest</h1>
+    <h3>任务详情</h3>
+</div>
+
+<div class="topnav">
+    <a href={% url 'tasks_square:task_square' %} class="active" style="margin-left: 100px;">任务广场</a>
+    <a href={% url 'hunt:up0' %}>我要发布</a>
+    <a href={% url 'hunt:edit' %}>个人中心</a>
+    <a href="#" style="float:right"><img src="/../../static/image/user_center.png" width="35px" height="35px"
+                                         alt="user center"></a>
+
+</div>
+<div class="row">
+    <div class="leftcolumn">
+        <img src="/../../static/image/details.png" alt="details button">
+    </div>
+    <div class="rightcolumn">
+        <div class="card">
+            <h1>{{ task.task_name }}</h1>
+        </div>
+        <!--swf 2020年4月25日 改动 新增用户信息页面-->
+        <div class="card">
+            <h2>发布者</h2>
+            <hr>
+            <!-- yjl 5.3 图片无法显示-->
+            {# 2020年5月9日 swf 头像显示成功 但是合并到手机端后 路径要改成手机端的static #}
+            <!--0519 没有头像应该怎么显示？yjl-->
+            <div style="text-align:center;"><a href={% url 'tasks_square:publisher_detail' task.publisher_id %}><img
+                    src="/../../static/uploads/{{ task.publisher.icon }}"
+                    width="25%" height="10%"></a></div>
+            <br/>
+            <div style="text-align:center;"><a style="text-decoration: none;color:black"
+                                               href={% url 'tasks_square:publisher_detail' task.publisher_id %}>{{ task.publisher.username }}</a><br>
+            </div>
+        </div>
+        <div class="card">
+            <h2>任务简介
+                <hr>
+            </h2>
+            {{ task.task_sketch }}<br></div>
+        {# 2020年5月9日 swf 没想好怎么实现取附件 #}
+        <div class="card">
+            <h2>任务附件
+                <hr>
+            </h2>
+            {% if task.task_file %}
+                <div class="button"><a href="{% url 'tasks_square:download' task.id %}" rel="external nofollow">点我下载</a><br>
+                </div>
+            {% else %}
+                该任务无附件
+            {% endif %}
+        </div>
+        <div class="card">
+            <h2>任务酬劳
+                <hr>
+            </h2>
+            ¥{{ task.task_reward }}<br></div>
+        <div class="card">
+            <h2>截止时间
+                <hr>
+            </h2>
+            {{ task.task_time }}<br></div>
+        <div class="card"><b>撤销记录：</b><br>
+            {% if task.revoked_tasks.all.exists %}
+                {% for reason in task.revoked_tasks.all %}
+                    匿名用户：{{ reason.revoke_reason }}<br>
+                {% endfor %}
+            {% else %}
+                暂无撤销记录
+            {% endif %}
+        </div>
+        <br/>
+        <br/>
+        <div style="text-align:center">
+            {% if user_id %}
+                <form action="{% url 'tasks_square:check_hunt' task.id %}" method="post">
+                    {% csrf_token %}
+                    <input class="button" type="submit" value="接受任务"/>
+                </form>
+                </div>
+
+                <!--2020年4月30日 swf 新增 讨论-->
+                <h2>问答</h2>
+
+                {% if task.discussed_task.all.exists %}
+                    <ol>
+                        {% for discussion in task.discussed_task.all %}
+                            <li class="mainres">
+                                <div class="card">
+                                    <div class="main">
+                                        <div class="left">
+                                            <a href={% url 'tasks_square:publisher_detail' discussion.discussant.id %}><strong>{{ discussion.discussant.username }}</strong></a>
+
+                                            <br/>
+                                            <br/>
+
+                                            <span style="font-size:13px;color:grey">{{ discussion.discusstime }}</span>
+                                            <br/>
+                                            {# 删除评论 #}
+                                            {% if user_id == discussion.discussant.id %}
+                                                <p>
+                                                    <script language="javascript">
+                                                        function delcfm() {
+                                                            if (!confirm("确认要删除？")) {
+                                                                window.event.returnValue = false;
+                                                            }
+                                                        }
+                                                    </script>
+                                                <form action="{% url 'tasks_square:delete' discussion.id 'discuss' task.id %}"
+                                                      target="_blank" method="get">
+                                                    <input class="button" name="" type="submit" value="删除本楼层"
+                                                           onClick="delcfm()"/>
+                                                </form>
+                                                </p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="mid">
+                                            {{ discussion.discuss }}<br>
+
+
+                                        </div>
+
+                                    </div>
+
+
+                                    {# 查过 可以用前端实现 点击"回复"后显示回复框 现在直接显示出来 #}
+
+                                    <br/>
+                                    {% if discussion.response_discuss.all.exists %}
+                                        <ul>
+                                            {% for response in discussion.response_discuss.all %}
+                                                <div class="respon">
+                                                    <li>
+
+                                                        <div class="left">
+                                                            <a href={% url 'tasks_square:publisher_detail' response.respondent.id %}><span
+                                                                    style="font-size:13px;"><strong>{{ response.respondent.username }}</strong></span></a>
+                                                            <br/>
+                                                            <span style="font-size:13px;color:grey">{{ response.responsetime }}</span>
+                                                            {# 删除评论 #}
+                                                            {% if user_id == response.respondent.id %}
+                                                                <p>
+                                                                    <script language="javascript">
+                                                                        function delcfm() {
+                                                                            if (!confirm("确认要删除？")) {
+                                                                                window.event.returnValue = false;
+                                                                            }
+                                                                        }
+                                                                    </script>
+                                                                <form action="{% url 'tasks_square:delete' response.id 'response' task.id %}"
+                                                                      target="_blank" method="get">
+                                                                    <input class="button"
+                                                                           style="background: #5b9eb9;font-weight: normal;font-size:13px;"
+                                                                           name="" type="submit"
+                                                                           value="删除本回复"
+                                                                           onClick="delcfm()"/>
+                                                                </form>
+                                                                </p>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="mid">
+                                                            <span style="font-size:14px;">{{ response.response }}</span><br>
+
+
+                                                        </div>
+
+
+                                                    </li>
+                                                </div>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+
+                                    <br/>
+                                    <form action="{% url 'tasks_square:response' task.id discussion.id %}"
+                                          method="post">
+                                        <script type="text/javascript">
+
+                                            div{{forloop.counter}} = function () {
+                                                var res{{forloop.counter}} = document.getElementById("response{{forloop.counter}}");
+                                                var sub{{forloop.counter}} = document.getElementById("submit{{forloop.counter}}");
+                                                if (res{{forloop.counter}}.style.display == 'block') {
+                                                    res{{forloop.counter}}.style.display = 'none';
+                                                } else {
+                                                    res{{forloop.counter}}.style.display = 'block';
+                                                }
+                                                if (sub{{forloop.counter}}.style.display == 'block') {
+                                                    sub{{forloop.counter}}.style.display = 'none';
+                                                } else {
+                                                    sub{{forloop.counter}}.style.display = 'block';
+                                                }
+                                            }
+
+
+                                        </script>
+                                        {% csrf_token %}
+                                        {# 前端可以设置一下这个input非空 #}
+                                        <br/>
+                                        <br/>
+                                        <input class="button" type="button" onclick="div{{forloop.counter}}();" id="check{{forloop.counter}}" style="display:block;" value="回复本楼层"><br>
+                                        <textarea class="sub" style="display:none;" name="response" id="response{{forloop.counter}}" required></textarea>
+                                        <input class="button" style="display:none;" id="submit{{forloop.counter}}" type="submit" value="提交"><br>
+
+                                    </form>
+                                </div>
+                                <br/>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                {% endif %}
+                <form action="{% url 'tasks_square:discuss' task.id %}" method="post">
+                    {% csrf_token %}
+                    <label for="discussion"><strong>讨论</strong></label>
+                    <br/>
+                    {# 前端可以设置一下这个input非空 #}
+                    <textarea class="discussion" name="discussion" id="discussion" required></textarea>
+                    <br/>
+                    <input class="button" type="submit" value="发布"/><br>
+                </form>
+
+            {% else %}
+                <a class="button" href={% url 'hunt:login' %}>请先登录！</a>
+            {% endif %}
+    </div>
+    </div>
+</div>
+<div class="footer">
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+</div>
+
+</body>
+</html>

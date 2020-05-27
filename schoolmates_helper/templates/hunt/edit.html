@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head> 
+    <meta charset="utf-8">
+    <title>个人中心</title> 
+    <link rel="stylesheet" type="text/css" href="/../../static/css/useredit.css">
+</head>
+
+<body>
+<div class="header">
+    <h1>Dark Forest</h1>
+    <p><b>个人中心</b></p>
+    <div style="text-align: center"><a class="button" href={% url 'hunt:login' %}>切换账号</a></div>
+</div>
+<!--2020年4月30日 新增 swf 未登录显示 if-->
+
+<div class="topnav">
+    <a href={% url 'tasks_square:task_square' %} style="margin-left: 100px;">任务广场</a>
+    <a href={% url 'hunt:up0' %}>我要发布</a>
+    <a href={% url 'hunt:edit' %} class="active">个人中心</a>
+    <a href="#" style="float:right; margin-right: 100px;"><img src="..\..\static\image\user_center.png" width="35px"
+                                                               height="35px"></a>
+
+</div>
+<div class="row">
+    <div class="info">
+        <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <!-- <img src="{{ user_form.icon }}"> -->
+            <img class="icon" src="/../../static/uploads/{{ user.icon }}">
+
+            <div class="row">
+                <div><span>邮箱:</span></div>
+                <div>{{ user_form.email }}{{ user_form.errors.email.0 }}</div>
+            </div>
+            <div class="row">
+                <div><span>用户名:</span></div>
+                <div>{{ user_form.username }}{{ user_form.errors.username.0 }}</div>
+            </div>
+            <div class="row">
+                <div><span>密码:</span></div>
+                <div>{{ user_form.password }}{{ user_form.errors.password.0 }}</div>
+            </div>
+            <div class="row">
+                <div><span>确认密码:</span></div>
+                <div>{{ user_form.repassword }}{{ user_form.errors.repassword.0 }}</div>
+            </div>
+            <div class="row">
+                <div><span>QQ:</span></div>
+                <div>{{ user_form.qq }}</div>
+            </div>
+            <div class="row">
+                <div><span>微信:</span></div>
+                <div>{{ user_form.wechat }}</div>
+            </div>
+            <div class="row">
+                <div><span>其他信息:</span></div>
+                <div>{{ user_form.other }}</div>
+            </div>
+            <div class="row">
+                <div><span>手机号:</span></div>
+                <div>{{ user_form.tel }}</div>
+            </div>
+            <div class="row">
+                <div><span>头像:</span></div>
+                <div>
+修改:
+<input type="file" name="icon" accept="image/*" id="id_icon"></div>
+
+                <span>当前头像:<img src="/../../static/uploads/{{ user.icon }}" style="width:50%;height:20%"></span>
+            </div>
+            <div style="text-align: center"><button type="submit" class="button">修改信息</button></div>
+        </form>
+    </div>
+    <div class="rightcolumn">
+        <!--一登录进去就是任务广场，含有其他按钮:个人中心、我要发布任务之类，链接加到这里-->
+        <div class="diamond"><a href={% url 'task_received:all_task_received' %}>
+            <h2>我接受的任务</h2>
+        </a></div>
+        <div class="diamond"><a href="http://127.0.0.1:8000/task_released/un_acp">
+            <h2>我发布的任务</h2>
+        </a></div>
+    </div>
+</div>
+<div class="footer">
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+</div>
+</body>
+
+</html>

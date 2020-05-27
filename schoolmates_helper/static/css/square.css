@@ -1,0 +1,351 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial;
+    padding: 10px;
+    background-image: url('../image/shuicai.jpg');
+}
+
+
+/* 头部标题 */
+
+.header {
+    padding: 30px;
+    text-align: center;
+    height: 300px;
+    width: 100%;
+    background-color: white;
+    background-image: url('../image/shuicaino.jpg');
+    background-repeat: no-repeat;
+}
+
+.header h1 {
+    font-size: 50px;
+}
+
+
+/* 导航条 */
+
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+    height: 48px;
+}
+
+
+/* 导航条链接 */
+
+.topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+
+/* 链接颜色修改 */
+
+.topnav a:hover:not(.active) {
+    background-color: #ddd;
+    color: black;
+}
+
+
+/* 激活 */
+
+.topnav a.active {
+    background-color: rgb(160, 160, 151);
+    color: black;
+}
+
+/* 搜索框 */
+
+.search {
+    height: 42px;
+    width: 250px;
+    border-radius: 42px;
+    background: rgba(255, 255, 255, 0.5);
+    float: right;
+}
+
+.search input:focus {
+    width: 300px;
+    height: 30px;
+}
+
+.buttonsp {
+    cursor: pointer;
+    background: rgba(41, 199, 255, 0.5);
+    border-radius: 42px;
+    width: 100px;
+    height: 42px;
+    top: -2px;
+    right: 20px;
+    content: "查询";
+    color: white;
+    float: right;
+}
+
+/* 排序方式 */
+.dropbtn {
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    background: rgba(41, 199, 255, 0.5);
+    border-radius: 42px;
+    width: 100px;
+    height: 42px;
+    top: -2px;
+    right: 20px;
+    content: "默认排序";
+}
+
+.dropdown {
+    position: relative;
+    display: inline;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #2a7c8e;
+}
+
+/* 创建两列 */
+
+
+/* Left column */
+
+.leftcolumn {
+    float: left;
+    padding-top: 20px;
+    width: 15%;
+    background: rgba(0,0,0,.2);
+}
+
+.leftcolumn h2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.leftcolumn ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.leftcolumn li{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.leftcolumn li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.leftcolumn li a.active {
+    border-right: #000 10px solid;
+}
+
+.leftcolumn li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+/* 中间栏 */
+
+.midcolumn {
+    float: left;
+    width: 85%;
+    padding-left: 20px;
+}
+
+/* 任务列表 */
+.card-date {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-style: italic;
+    font-size: 10px;
+}
+
+.card-title, .card-excerpt {
+    font-family: 'Playfair Display', serif;
+}
+
+.card-date, .card-title {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.card-date, .card-excerpt {
+    color: #777;
+}
+
+.card-money {
+    text-align: center;
+}
+
+.card-button {
+    background: #1e7db9;
+    padding: 5px 10px 6px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-box-shadow: 0 1px 3px #999;
+    -webkit-box-shadow: 0 1px 3px #999;
+    text-shadow: 0 -1px 1px #222;
+    border-bottom: 1px solid #222;
+    position: relative;
+    cursor: pointer;
+
+}
+
+/* 右侧栏 */
+.rightcolumn {
+    float: left;
+    width: 15%;
+    padding-left: 20px;
+}
+
+/* 文章卡片效果 */
+
+.card {
+    background-color: rgba(255,255,255,0.7);
+    padding: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+    width: 280px;
+    height: 260px;
+    float: left;
+    box-shadow: 5px 5px 10px 5px rgba(0,0,0,0.5);
+}
+
+/* 方块效果 */
+.diamond a {
+    background-color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    color: grey;
+    width: 100px;
+    height: 100px;
+    float: right;
+    border: 3px outset white;
+    text-align: center;
+    box-shadow: darkgrey 10px 10px 30px 5px;
+}
+
+.diamond a:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+/* 翻页 */
+.pagination {
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.current {
+    background-color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    color: grey;
+    width: 160px;
+    height: 100px;
+    text-align: center;
+
+}
+
+.arrowhead a:link {
+    background-color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    color: grey;
+    width: 30px;
+    height: 100px;
+    text-align: center;
+}
+
+.arrowhead a:visited {
+    background-color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    color: grey;
+    width: 30px;
+    height: 100px;
+    text-align: center;
+}
+
+.arrowhead a:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    text-decoration: none;
+    color: white;
+    width: 30px;
+    height: 100px;
+    text-align: center;
+
+}
+
+/* 列后面清除浮动 */
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* 连接按钮 */
+.button {
+    background: #1e7db9;
+    padding: 5px 10px 6px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-box-shadow: 0 1px 3px #999;
+    -webkit-box-shadow: 0 1px 3px #999;
+    text-shadow: 0 -1px 1px #222;
+    border-bottom: 1px solid #222;
+    position:relative;
+    cursor: pointer;
+}
+
+/* 底部 */
+
+.footer {
+    padding: 20px;
+    text-align: center;
+    background-image: url('/../../static/image/diduan2.png');
+    background-size:100% 100%;
+    background-repeat: no-repeat;
+    margin-top: 75px;
+}

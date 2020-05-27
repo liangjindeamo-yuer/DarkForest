@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="..\..\static\css\data_form.css">
+</head>
+
+<body>
+    <form action="" method="post"enctype="multipart/form-data">
+        {% csrf_token %}
+        <table border="0">
+            <caption>
+                <h1>注册</h1>
+            </caption>
+            {{ user1.as_table }}
+        </table>
+        <div style="text-align: center"><input class="button" type="submit" value="提交"></div>
+        {{ user1.type.type }}
+    </form>
+<div class="footer">
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+</div>
+</body>
+
+</html>

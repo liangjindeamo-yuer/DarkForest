@@ -1,0 +1,178 @@
+{% extends 'base_main.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'Schoolmateshelper/user/css/modifytask.css' %}">
+
+{% endblock %}
+
+
+
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'js/swiper.jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Schoolmateshelper/user/js/modifytask.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container" id="task" style="position:relative;height: 250%;overflow: auto;padding: 1.5rem 0;">
+        <form method="post" enctype="multipart/form-data" action="{% url 'App:modifytask' task.id %}" onsubmit="return checktask()">
+            {% csrf_token %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">原任务名称</h3>
+                </div>
+                <div class="panel-body">
+                    {{ task.task_name }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="taskname_input">任务名称</label>
+                <input type="text" class="form-control" id="taskname_input" placeholder="{{ task.task_name }}"
+                       name="taskname">
+                <span id="taskname_info"></span>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">原任务类型</h3>
+                </div>
+                <div class="panel-body">
+                    {{ task.task_type.typename }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="tasktype_input">任务类型</label>
+                <select class="form-control" id="tasktype_input" name="tasktype" style="width: 10rem;">
+                    <option value={{ task.task_type.id }}>原类型：{{ task.task_type.typename }}</option>
+                    <option value=1>快递服务</option>
+                    <option value=2>修理服务</option>
+                    <option value=3>课业指导</option>
+                    <option value=4>邂逅表白</option>
+                    <option value=5>其他服务</option>
+                </select>
+                <span id="tasktype_info"></span>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">原联系方式:{{ task.contact_type_publisher.typename }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% if task.contact_type_publisher_id == 1 %}
+                        {{ task.publisher.email }}
+                    {% elif task.contact_type_publisher_id == 2 %}
+                        {{ task.publisher.qq }}
+                    {% elif task.contact_type_publisher_id == 3 %}
+                        {{ task.publisher.wechat }}
+                    {% elif task.contact_type_publisher_id == 4 %}
+                        {{ task.publisher.tel }}
+                    {% elif task.contact_type_publisher_id == 5 %}
+                        {{ task.publisher.other }}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="tasktype_input">新的联系方式</label>
+                <select class="form-control" id="contact_input" name="contact" style="width: 10rem;">
+                    <option value={{ task.contact_type_publisher_id }}>原类型：{{ task.contact_type_publisher.typename }}</option>
+                    <option value=1>email</option>
+                    <option value=2>QQ</option>
+                    <option value=3>wechat</option>
+                    <option value=4>telephone</option>
+                    <option value=5>其它联系方式</option>
+                </select>
+                <span id="contact_info"></span>
+            </div>
+
+
+
+
+
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">原任务简介</h3>
+                </div>
+                <div class="panel-body">
+                    {{ task.task_sketch }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="tasksketch_input">任务简介</label>
+                <textarea rows="3" class="form-control" placeholder="{{ task.task_sketch }}(不超过200字)"
+                          id="tasksketch_input"
+                          name="tasksketch"></textarea>
+                <span id="taskskecth_info"></span>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">原截止日期</h3>
+                </div>
+                <div class="panel-body">
+                    {{ task.task_time }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label>截止日期</label><br>
+                <input type="text" class="form-control" id="taskdate_year_input" placeholder="{{ task.task_time.year }}"
+                       name="taskdate_year"
+                       style="width: 2.2rem;display: inline;">
+                <label>年</label>
+                <span id="taskdate_year_info"></span>
+                <input type="text" class="form-control" id="taskdate_month_input" placeholder="{{ task.task_time.month }}"
+                       name="taskdate_month"
+                       style="width: 2.2rem;display: inline;">
+                <label>月</label>
+                <span id="taskdate_month_info"></span>
+                <input type="text" class="form-control" id="taskdate_day_input" placeholder="{{ task.task_time.day }}"
+                       name="taskdate_day"
+                       style="width: 2.2rem;display: inline;">
+                <label>日</label>
+                <span id="taskdate_day_info"></span>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">原任务酬劳</h3>
+                </div>
+                <div class="panel-body">
+                    ￥{{ task.task_reward }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label>任务酬劳</label><br>
+                <input type="text" class="form-control" id="taskreward_input" placeholder="{{ task.task_reward }}"
+                       name="taskreward"
+                       style="width: 6rem;display: inline;">
+                <label>￥</label>
+                <br>
+                <span id="taskreward_info"></span>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">原任务附件</h3>
+                </div>
+                <div class="panel-body">
+                    {% if task.task_file %}
+                    <a href="http://{{ SERVER_HOST }}:{{ SERVER_PORT }}/static/uploads/{{ task.task_file }}"
+                       download="任务附件">Download</a>
+                    {% else %}
+                    无附件
+                {% endif %}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="taskfile_input">选择新的任务附件</label>
+                <input type="file" id="taskfile_input" name="taskfile">
+                <span id="taskfile_info"></span>
+            </div>
+            <button type="submit" class="btn btn-block btn-success">修改任务</button>
+        </form>
+
+
+    </div>
+{% endblock %}

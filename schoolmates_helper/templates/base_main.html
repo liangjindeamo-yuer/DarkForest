@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'Schoolmateshelper/main/css/main.css' %}">
+{% endblock %}
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'Schoolmateshelper/user/js/base_main.js' %}"></script>
+{% endblock %}
+{% block header %}
+    <header></header>
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <a href="{% url 'App:home' %}" class="home">
+            <dl>
+                <dt>
+                    <span></span>
+                </dt>
+                <dd>首页</dd>
+            </dl>
+        </a>
+        <a href="{% url 'App:alltask' %}" class="alltask">
+            <dl>
+                <dt>
+                    <span></span>
+                </dt>
+                <dd>任务广场</dd>
+            </dl>
+        </a>
+        <a href="#" class="task" onclick="on_click_base_main({{ is_login }},{{ is_activate }})">
+            <dl>
+                <dt>
+                    <span></span>
+                </dt>
+                <dd>发布任务</dd>
+            </dl>
+        </a>
+        <a href="{% url 'App:mine' %}" class="mine_icon">
+            <dl>
+                <dt>
+                    <span></span>
+                </dt>
+                <dd>个人主页</dd>
+            </dl>
+        </a>
+    </footer>
+{% endblock %}

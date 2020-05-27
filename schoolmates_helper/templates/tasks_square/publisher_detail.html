@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户{{ publisher.username }}的信息</title> 
+    <link rel="stylesheet" type="text/css" href="/../../static/css/publisher.css">
+</head>
+<body>
+<div class="header">
+    <h1>Dark Forest</h1>
+    <h3>用户{{ publisher.username }}的信息</h3>
+</div>
+
+<div class="topnav">
+    <a href={% url 'tasks_square:task_square' %} class="active" style="margin-left: 100px;">任务广场</a>
+    <a href={% url 'hunt:up0' %}>我要发布</a>
+    <a href={% url 'hunt:edit' %}>个人中心</a>
+    <a href="#" style="float:right"><img src="/../../static/image/user_center.png" width="35px" height="35px"
+                                         alt="user center"></a>
+
+</div>
+<div class="row">
+    <div class="leftcolumn">
+        <img src="/../../static/image/publisher.png" alt="details button">
+    </div>
+    <div class="rightcolumn">
+        <div class="card">
+            <h1>{{ publisher.username }}</h1>
+        </div>
+        <br/>
+        <div class="button">发布的任务</div>
+        {% for task in his_alltasks %}
+            <ul>
+                <li>
+                    <div class="card"><b style="color:grey;">任务名：</b><a
+                            href={% url 'tasks_square:task_detail' task.id %}>{{ task.task_name }}</a>
+                        <br>
+                        <b style="color:grey;">任务完成评论：</b><br>
+                        {% if task.commented_tasks.all.exists %}
+                            {% for comment in task.commented_tasks.all %}
+                                {{ task.hunter.username }}：{{ comment.comment_for_publisher }}<br>
+                            {% endfor %}
+                        {% else %}
+                            暂无评价<br>
+                        {% endif %}
+                        <b style="color:grey;">作为发布者撤销记录：</b><br>
+                        {% if task.canceled_tasks.all.exists %}
+                            {% for reason in task.canceled_tasks.all %}
+                                匿名用户：{{ reason.canceled_reason }}<br>
+                            {% endfor %}
+                        {% else %}
+                            暂无撤销记录
+                        {% endif %}
+                    </div>
+                </li>
+            </ul>
+        {% endfor %}
+        <div class="button">完成或取消的任务</div>
+        {% for task in his_finished %}
+            <ul>
+                <li>
+                    <div class="card"><b style="color:grey;">任务名：</b>
+                            {{ task.task_name }}
+                        <br>
+                        <b style="color:grey;">任务完成评论：</b><br>
+                        {% if task.commented_tasks.all.exists %}
+                            {% for comment in task.commented_tasks.all %}
+                                {{ task.publisher.username }}：{{ comment.comment_for_hunter }}<br>
+                            {% endfor %}
+                        {% else %}
+                            暂无评价<br>
+                        {% endif %}
+                        <b style="color:grey;">作为接收者撤销记录：</b><br>
+                        {% if task.revoked_tasks.all.exists %}
+                            {% for reason in task.revoked_tasks.all %}
+                                匿名用户：{{ reason.revoke_reason }}<br>
+                            {% endfor %}
+                        {% else %}
+                            暂无撤销记录
+                        {% endif %}
+                    </div>
+                </li>
+            </ul>
+        {% endfor %}
+    </div>
+</div>
+<div class="footer">
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+</div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+{% extends 'base_main.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'Schoolmateshelper/main/css/mine.css' %}">
+{% endblock %}
+
+
+
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'Schoolmateshelper/main/js/mine.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="mine">
+        <div class="fixed">
+            {% if is_login %}
+                {% if icon %}
+                    <span>
+                    <img class="u_icon" src="{{ icon }}" alt="{{ user.username }}">
+                    </span>
+                {% else %}
+                    <span>
+                    <span class="glyphicon glyphicon-user"></span>
+                    </span>
+                {% endif %}
+                <p>{{ user.username }} <a style="font-size:medium;color: black;" href="{% url 'App:modifyuser' %}">修改个人信息</a></p>
+
+                <p>
+                    <span class="glyphicon glyphicon-education"></span>
+                    {% if user.is_active %}
+                        <span style="font-size: 0.5rem">等级:{{ user.rank}} 普通会员</span>
+                    {% else %}
+                        <span style="font-size: 0.5rem;color: grey" id="not_activate">
+                              未激活
+                        </span>
+                    {% endif %}
+
+                </p>
+            {% else %}
+                <span>
+                    <span class="glyphicon glyphicon-user"></span>
+                </span>
+                <p id="not_login" style="font-size: 0.4rem">
+                    <span class="glyphicon glyphicon-flash"></span>
+                    登录
+                </p>
+                <p>
+                    <span class="glyphicon glyphicon-education"></span>
+                    <span>等级</span>
+                </p>
+
+                <div id="regis">
+                    <a href="{% url 'App:register' %}" style="color: white">注册</a>
+                </div>
+            {% endif %}
+
+
+            <p style="font-family: 华文行楷,serif;">
+                <span class="glyphicon glyphicon-bullhorn"></span>
+                <a href="https://www.fudan.edu.cn/"><span>博学而笃志，切问而近思。修个学历带回家！</span></a>
+            </p>
+        </div>
+
+        <div class="mine">
+            <p>
+                <span>我发布的任务</span>
+                <a href="{% url 'App:alltaskpublisher' %}">查看所有发布任务> </a>
+            </p>
+            <p>
+                <span>我接受的任务</span>
+                <a href="{% url 'App:alltaskhunter' %}">查看所有接受任务> </a>
+            </p>
+            <nav id="nav">
+                <ul>
+                    <li onclick="window.location.href='/App/huntertask/0/4/'">
+                        <dl>
+                            <dt>
+                                <span class="glyphicon glyphicon-shopping-cart"></span>
+                            </dt>
+                            <dd>已接取，待完成</dd>
+                        </dl>
+                    </li>
+                    <li onclick="window.location.href='/App/publishertask/0/4/'">
+                        <dl>
+                            <dt>
+                                <span class="glyphicon glyphicon-hdd"></span>
+                            </dt>
+                            <dd>已被接，待完成</dd>
+                        </dl>
+                    </li>
+                </ul>
+                <ul>
+                    <li onclick="window.location.href='/App/comment/0/4/'">
+                        <dl>
+                            <dt>
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </dt>
+                            <dd>待评价</dd>
+                        </dl>
+                    </li>
+                    <li onclick="window.location.href='/App/taskfinished/0/4/'">
+                        <dl>
+                            <dt>
+                                <span class="glyphicon glyphicon-fire"></span>
+                            </dt>
+                            <dd>已完成</dd>
+                        </dl>
+                    </li>
+                </ul>
+            </nav>
+            <menu>
+                <ul>
+                    <li onclick="window.location.href='/App/callus/'; ">
+                        <dl>
+                            <dt>
+                                <span class="glyphicon glyphicon-earphone"></span>
+                            </dt>
+                            <dd>客服/反馈</dd>
+                        </dl>
+                    </li>
+                    <li onclick="window.location.href='/App/aboutus/'">
+                        <dl>
+                            <dt>
+                                <span class="glyphicon glyphicon-question-sign"></span>
+                            </dt>
+                            <dd>关于我们</dd>
+                        </dl>
+                    </li>
+                </ul>
+            </menu>
+            {% if is_login %}
+                <p>
+                    <a href="{% url 'App:logout' %}">退出当前账号</a>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

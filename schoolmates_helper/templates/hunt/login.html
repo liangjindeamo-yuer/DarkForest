@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="..\..\static\css\login.css">
+
+    <title>登录</title>
+</head>
+<body>
+    <div class="box">
+        <h2>登录</h2>
+
+        <form method="post" enctype="multipart/form-data" action="">
+            {% csrf_token %}
+            <div class="inputBox">
+                <label for="username_input">用户名/邮箱<br/></label>
+                <br/>
+                <br/>
+                <input type="text" id="username_input" name="username">
+
+        <br/>
+
+            </div>
+
+            <div class="inputBox">
+                <label for="password_input">密码<br/></label>
+                <br/>
+                <br/>
+                <input type="password" id="password_input" name="password">
+
+        <br/>
+
+            </div>
+
+            <div style="text-align: center"><input type="submit" value="提交"></div>
+        </form>
+        <a href={% url 'hunt:index' %}>点我注册</a>
+    </div>
+</body>
+
+</html>

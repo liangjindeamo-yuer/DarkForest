@@ -1,0 +1,130 @@
+{% extends 'base_main.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'Schoolmateshelper/user/css/alltask_publisher.css' %}"
+          xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+{% endblock %}
+
+
+
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'js/swiper.jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Schoolmateshelper/user/js/alltask_publisher.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="alltask">
+        <aside>
+            <ul>
+                <li>
+                    <a href="{% url 'App:alltaskpublisher' %}">
+                        全部任务
+                    </a>
+                    {% ifequal  typeid   0 %}
+                        <span class="yellowSlide"></span>
+                    {% endifequal %}
+                </li>
+                {% for tasktype in tasktypes %}
+                    <li>
+                        <a href="{% url 'App:alltaskpublisher_with_params' tasktype.type_id %}">{{ tasktype.typename }}</a>
+                        {% ifequal  tasktype.type_id  typeid %}
+                            <span class="yellowSlide"></span>
+                        {% endifequal %}
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'App:mine' %}" style="font-size: large">
+                <span class="glyphicon glyphicon-share-alt" style="color: blue"></span>
+                <span style="color: blue">返回</span>
+            </a>
+        </aside>
+
+        <section>
+            <nav>
+                <ul>
+                    <li>
+                        <span>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success ">{{ sort }}</button>
+                            <button type="button" class="btn btn-success dropdown-toggle " data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-chevron-down"></span>
+                            </button>
+                            <ul class="dropdown-menu" id="all_sort">
+                                <li style="width:5.0rem;margin-bottom: 0.05rem;"><a
+                                        href="{% url 'App:alltaskpublisher_sort' typeid 0 %}"
+                                        class="list-group-item list-group-item-success" id="未被接">未被接</a></li>
+                                <li style="width:5.0rem;margin-bottom: 0.05rem"><a
+                                        href="{% url 'App:alltaskpublisher_sort' typeid 1 %}"
+                                        class="list-group-item list-group-item-success" id="已被接">已被接</a></li>
+                                <li style="width:5.0rem;"><a
+                                        href="{% url 'App:alltaskpublisher_sort' typeid 4 %}"
+                                        class="list-group-item list-group-item-success" id="所有任务">所有任务</a></li>
+                            </ul>
+                        </div>
+                        </span>
+                    </li>
+                </ul>
+            </nav>
+            <menu>
+                <ul>
+                    {% for task in task_list %}
+                        <li>
+                            <a href="{% url 'App:taskcontent' task.id %}" class="list-group-item">
+                                <h4 class="list-group-item-heading" style="color: darkorange;display: inline-block;
+                                text-align: center;vertical-align: center;line-height: 0.4rem;font-weight: 800;">
+                                    {{ task.task_name }}</h4><!--border: 1px solid orange; border-radius: 1000px;-->
+                                <div class="list-group-item-text">
+                                    <div>
+                                        详情：{{ task.task_sketch }}
+                                    </div>
+                                    <div style="float: left;display: inline">
+                                        酬劳：￥{{ task.task_reward }}
+                                        <br>
+                                        联系人：{{ task.publisher.username }}
+                                    </div>
+
+                                    <div style="font-size: 6px;float: left;display: inline;margin-top: 0.5rem">
+                                        截止日期：{{ task.task_time }}
+                                    </div>
+
+                                    <div>
+                                        {% if task.is_pickedup %}
+                                            {% if task.is_finished %}
+                                                <h1 style="color: green;border:1px solid green;border-radius: 1500px;display:inline-block;position: absolute;right: 0.15rem;">
+                                                    已完成</h1>
+                                            {% else %}
+                                                <h1 style="color: red;border:1px solid red;border-radius: 1500px;display: inline-block;position: absolute;right: 0.15rem;margin-top: -0.5rem;">
+                                                    未完成</h1>
+                                                <button class="btn-danger" onclick="relievetask({{ task.id }})"
+                                                        style="position: absolute;right:0.15rem;">解除委托
+                                                </button>
+                                                <button class="btn-success" onclick="finishtask({{ task.id }})"
+                                                        style="position: absolute;right:0.15rem;margin-top: 0.5rem">任务完成
+                                                </button>
+                                            {% endif %}
+
+                                        {% else %}
+                                            <h1 style="color: green;border:1px solid green;border-radius: 1500px;display: inline-block;position: absolute;right: 0.15rem;">
+                                                未被接取</h1>
+                                            <button class="btn-success" onclick="modifytask({{ task.id }})"
+                                                    style="position:absolute;right:0.15rem;margin-top:0.5rem;">
+                                                修改任务
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </menu>
+
+        </section>
+    </div>
+{% endblock %}

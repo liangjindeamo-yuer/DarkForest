@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/../../static/css/check.css">
+
+    <title>确定接受</title> 
+</head>
+<body>
+    <div class="box">
+
+{% if user_id %}
+    <b style="color:white;">确定接收这个名为“{{ task.task_name }}”的任务吗？</b><br>
+    <br/>
+<form action="{% url 'tasks_square:hunt_task' task.id %}" method="post">
+    {% csrf_token %}
+    <label for="task_type_input" style="color:white;">联系方式:</label>
+    <select class="form-control" id="task_type_input" name="contacthunter" style="width: 10rem;">
+        <option value=1>邮箱</option>
+        <option value=2>QQ</option>
+        <option value=3>微信</option>
+        <option value=4>手机号</option>
+        <option value=5>其他方式</option>
+    </select>
+    <br/>
+    <br/>
+    <input class="button" type="submit" value="接受该任务"/><br>
+<br/>
+</form>
+<div style="text-align:center;"><a  style="text-decoration: none;color:white;" href={% url 'tasks_square:task_square' %}>取消，再考虑一下</a></div>
+{% else %}
+    <div style="text-align:center;"><a style="text-decoration: none;color:white;" href={% url 'hunt:login' %}>点击登录！</a></div>
+{% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/../../static/css/check.css">
+
+   <title>成功接受任务</title> 
+</head>
+<body>
+    <div class="box">
+        <div style="color:white">恭喜！您已成功接收这个名为"{{ task.task_name }}"的任务！<br></div>
+        <br/>
+<div style="text-align: center;"><a class="buttonsp" href={% url 'tasks_square:task_square' %}>好的，回到任务广场</a></div>
+    </div>
+</body>
+</html>

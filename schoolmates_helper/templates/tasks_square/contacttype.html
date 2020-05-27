@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/../../static/css/contacttype.css">
+
+    <title>未填写联系方式</title> 
+</head>
+<body>
+<div class="box">
+<div>您尚未填写“{{ contactname }}”!<br>
+“确定”转到个人中心填写{{ contactname }}；<br/>
+    “取消”返回并选择其他联系方式。<br></div>
+    <br/>
+    <div><a class="button" href={% url 'hunt:edit' %}>确定</a></div>
+<br/>
+<form action="{% url 'tasks_square:check_hunt' task.id %}" method="post">
+    {% csrf_token %}
+    <input class="buttonsp" type="submit" value="取消"/>
+</form>
+</div>
+</body>
+</html>

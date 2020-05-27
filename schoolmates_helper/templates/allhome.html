@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+</head>
+<body style="margin:0;padding:0;background: url(/static/img/background.png);background-size:cover;">
+<div>
+    <a onclick="window.location.href='{% url 'App:home' %}'" >
+        <button class="btn-group-lg" style="font-size: 10rem;margin-top: 2rem;margin-left: 8rem;background:transparent;border-width:0;outline:none;">
+            <span class="glyphicon glyphicon-phone"></span>点击进入手机端
+        </button>
+    </a>
+    <a href={% url 'task_received:logout' %}>
+        <button class="btn-group-lg" style="font-size: 10rem;margin: 8rem;background:transparent;border-width:0;outline:none;">
+            <span class="glyphicon glyphicon-blackboard"></span>点击进入电脑端
+        </button>
+    </a>
+
+
+</div>
+</body>
+</html>

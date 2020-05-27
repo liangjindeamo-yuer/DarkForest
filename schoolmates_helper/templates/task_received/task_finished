@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head> 
+    <meta charset="utf-8">
+    <title>我接受的任务</title> 
+    <link rel="stylesheet" type="text/css" href="..\..\..\..\static\css\rev_fin.css">
+</head>
+
+<body>
+    <div class="header">
+        <h1>SCHOOL Helper</h1>
+        <p><b>发布任务</b></p>
+    </div>
+
+    <div class="topnav">
+        <a href={% url 'tasks_square:task_square' %} style="margin-left: 100px;">任务广场</a>
+        <a href={% url 'hunt:up0' %}>我要发布</a>
+        <a href={% url 'hunt:edit' %} class="active">个人中心</a>
+        <a href="#">个人中心</a>
+        <a href="#" style="float:right; margin-right: 100px;"><img src="..\..\..\..\static\image\user_center.png"
+                width="35px" height="35px"></a>
+
+    </div>
+
+<!--还没写提交后的操作-->
+<div id="content">
+<b>您确定完成名为“{{ task.task_name }}”的任务，该任务内容为"{{ task.task_sketch }}"</b>
+
+<form method="post" action={% url 'task_received:comment' %}>
+    {% csrf_token %}
+    <p><b>请输入您对任务发布方"{{ task.publisher.username }}"的评价:</b></p>
+    <!--星级待做-->
+    <!--换种文本框，注意提交方式可能要对应更改-->
+    <input type="text" name="comment" value="请输入评价" style="width:800px; height:200px; margin-top: 20px;"><br>
+    <input type="submit" id="btn" style="width: 130px;" value="确定评价">
+</form>
+<a href={% url 'task_received:all_task_received' %}>返回</a>
+</div>
+</body>
+</html>

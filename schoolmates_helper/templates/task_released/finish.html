@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>finish</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/what_I_release.css">
+
+</head>
+<body>
+<div class="header">
+    <h1>SCHOOL Helper</h1>
+    <h3>个人中心</h3>
+    <p>我发布的任务</p>
+</div>
+<div class="topnav">
+    <a href="#">首页</a>
+    <a href={% url 'tasks_square:task_square' %}>任务广场</a>
+    <a href={% url 'hunt:up0' %}>我要发布</a>
+    <a href={% url 'hunt:edit' %}>个人中心</a>
+    <a href="#" style="float:right"><img src="/../../static/image/user_center.png" width="35px" height="35px"
+                                         alt="user center"></a>
+
+</div>
+<div class="row">
+    <div class="leftcolumn">
+        <div class="card">
+            <h2>我发布的任务</h2>
+            <ul>
+                <li><a href="http://127.0.0.1:8000/task_released/finish" class="active">&nbsp;&nbsp;&nbsp;&nbsp;已完成的任务</a></li>
+                <li><a href="http://127.0.0.1:8000/task_released/acp">&nbsp;&nbsp;&nbsp;&nbsp;未完成的任务</a></li>
+                <li><a href="http://127.0.0.1:8000/task_released/un_acp">&nbsp;&nbsp;&nbsp;&nbsp;尚未被接受的任务</a></li>
+                <li><a href="http://127.0.0.1:8000/task_square/">&nbsp;&nbsp;&nbsp;&nbsp;回到任务广场</a></li>
+
+            </ul>
+        </div>
+    </div>
+    <form method="post">
+            <div class="form-group">
+                <label for="task_type_input">任务类型</label>
+                <select class="form-control" name="task_type" style="width: 10rem;">
+                    <option value=0 {% if id2 == 0 %} selected="selected"{% endif %} >全部</option>
+                    <option value=1 {% if id2 == 1 %} selected="selected"{% endif %}>快递服务</option>
+                    <option value=2 {% if id2 == 2 %} selected="selected"{% endif %}>修理服务</option>
+                    <option value=3 {% if id2 == 3 %} selected="selected"{% endif %}>课业指导</option>
+                    <option value=4 {% if id2 == 4 %} selected="selected"{% endif %}>邂逅表白</option>
+                    <option value=5 {% if id2 == 5 %} selected="selected"{% endif %}>其他服务</option>
+                </select>
+            </div>
+            <input type="submit" name="Submit" value="提交">
+    </form>
+    <div class="rightcolumn">
+        {% for mission in page.object_list %}
+            {% if mission.is_finished == True %}
+            {% if id2 == 0 or mission.task_type.type_id == id2 %}
+                <div class="card">
+                    <h2>{{ mission.task_name }}</h2>
+                    <span style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{ mission.task_sketch }}</span>
+                    <div class="card-date">截止时间：{{ mission.task_time }}<br></div>
+                    <div class="card-money">
+                                ¥&nbsp;{{ mission.task_reward }}<br>
+                    </div>
+                    <h3></h3>
+                    <a class="button" href="/task_released/m_detail/?id={{ mission.id }}">任务详情</a>
+                </div>
+            {% endif %}
+            {% endif %}
+        {% endfor %}
+        <ul class="pagination">
+            {% if  page.has_previous %}
+                <li>
+                <a href="?finish={{ page.previous_page_number }}">上一页</a>
+                </li>
+            {% else %}
+                <li class="disabled">
+                <a href="#">上一页</a>
+                </li>
+            {% endif %}
+
+            {% for page_number in paginator.page_range %}
+                {% if page_number == page_number %}
+                    <li class="active">
+                        <a href="?finish={{ page_number }}">{{ page_number }}</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="?finish={{ page_number }}">{{ page_number }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page.has_next %}
+                <li>
+                    <a href="?finish={{ page.next_page_number }}">下一页</a>
+                </li>
+            {% else%}
+                <li class="disabled">
+                    <a href="#">下一页</a>
+                </li>
+            {% endif %}
+
+            <li>
+                当前页数{{ page.number }}
+            </li>
+
+        </ul>
+    </div>
+</div>
+<div class="footer">
+    <h4>
+
+        Written by Group 5.<br>
+        Visit us at:<br>
+        上海市闵行区东川路800号<br>
+
+    </h4>
+</div>
+
+</body>
+
+</html>

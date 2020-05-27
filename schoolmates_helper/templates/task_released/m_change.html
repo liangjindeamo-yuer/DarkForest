@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我发布的任务</title>
+    <link rel="stylesheet" type="text/css" href="/../../static/css/change.css">
+</head>
+<body>
+<div class="header">
+    <h1>SCHOOL Helper</h1>
+    <h3>个人中心</h3>
+    <p>我发布的任务</p>
+</div>
+
+<div class="topnav">
+    <a href="#">首页</a>
+    <a href={% url 'tasks_square:task_square' %}>任务广场</a>
+    <a href={% url 'hunt:up0' %}>我要发布</a>
+    <a href={% url 'hunt:edit' %}>个人中心</a>
+    <a href="#" style="float:right"><img src="/../../static/image/user_center.png" width="35px" height="35px"
+                                         alt="user center"></a>
+
+</div>
+<div class="row">
+
+    <div class="leftcolumn">
+        <div class="card">
+            <ul>
+                <li><a href="http://127.0.0.1:8000/task_released/un_acp"
+                       >&nbsp;&nbsp;&nbsp;&nbsp;返回</a></li>
+            </ul>
+        </div>
+        {% if mission.hunter != Null %}
+            接收者：<a href={% url 'tasks_square:publisher_detail' mission.hunter_id %}>{{ mission.hunter.username }}</a><br>
+        {% endif %}
+        <div class="card">
+            <h2>希望的联系方式</h2>
+            <hr>
+            <p>{{mission.contact_type_publisher.typename}}</p>
+        </div>
+        <div class="card">
+            <h2>截止日期</h2>
+            <hr>
+            <p>{{mission.task_time}}</p>
+        </div>
+        <div class="card">
+            <h2>任务类型</h2>
+            <hr>
+            <p>{{type}}</p>
+        </div>
+        <div class="card">
+            <h2>任务详情</h2>
+            <hr>
+            <p>{{mission.task_sketch}}</p>
+        </div>
+        <div class="card">
+            <h2>酬金（元）</h2>
+            <hr>
+            <p>{{mission.task_reward}}</p>
+        </div>
+    </div>
+
+    <br/>
+    <br/>
+
+    <div class="rightcolumn">
+        <h1>修改</h1>
+        <form enctype="multipart/form-data" method="post">
+            截止日期<input type="date" name="Data">
+            <div class="form-group">
+                <label for="task_type_input">任务类型</label>
+                <select class="form-control" name="task_type" style="width: 10rem;">
+                    <option value=1>快递服务</option>
+                    <option value=2>修理服务</option>
+                    <option value=3>课业指导</option>
+                    <option value=4>邂逅表白</option>
+                    <option value=5>其他服务</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="task_contact_input">希望的联系方式</label>
+                <select class="form-control" name="task_contact" style="width: 10rem;">
+                    {% if mission.publisher.email != Null %}
+                        <option value=0>email</option>
+                    {% endif %}
+                    {% if mission.publisher.qq != Null %}
+                        <option value=1>qq</option>
+                    {% endif %}
+                    {% if mission.publisher.wechat != Null %}
+                        <option value=2>wechat</option>
+                    {% endif %}
+                    {% if mission.publisher.tel != Null %}
+                        <option value=3>tel</option>
+                    {% endif %}
+                    {% if mission.publisher.other != Null %}
+                        <option value=4>other</option>
+                    {% endif %}
+                </select>
+            </div>
+            <div>（只能选择个人资料中已保存的联系方式）</div>
+            <div class="form-group">
+            <br>
+            <label for="task_sketch_input">任务简介</label>
+            <textarea rows="3" class="form-control" placeholder="请输入任务简介,以简单地描述你的任务(不超过200字)"
+                          name="task_sketch"></textarea>
+            </div>
+            <br>
+            任务名<input type="text" name="m1">
+            <br>
+            酬金（元）<input type="number" name="g">
+            <br>
+            <div class="form-group">
+                <label for="task_file_input">任务附件</label>
+                <input type="file" name="task_file">
+            </div>
+            <br>
+            <input type="submit" name="Submit" value="提交">
+        </form>
+    </div>
+</div>
+</body>
+</html>

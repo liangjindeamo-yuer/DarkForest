@@ -1,0 +1,206 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial;
+    padding: 10px;
+    background-image: url('../image/shuicai.jpg');
+}
+
+
+/* 头部标题 */
+
+.header {
+    padding: 30px;
+    text-align: center;
+    height: 300px;
+    width: 100%;
+    background-color: white;
+    background-image: url('../image/shuicaino.jpg');
+    background-repeat: no-repeat;
+}
+
+.header h1 {
+    font-size: 50px;
+}
+
+
+/* 导航条 */
+
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+    height: 48px;
+}
+
+
+/* 导航条链接 */
+
+.topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+
+/* 链接颜色修改 */
+
+.topnav a:hover:not(.active) {
+    background-color: #ddd;
+    color: black;
+}
+
+
+/* 激活 */
+
+.topnav a.active {
+    background-color: rgb(160, 160, 151);
+    color: black;
+}
+/* 搜索框 */
+
+.search {
+    height: 42px;
+    width: 250px;
+    border-radius: 42px;
+    background: rgba(255, 255, 255, 0.5);
+    float: right;
+}
+
+.search input:focus {
+    width: 300px;
+    height: 30px;
+}
+/* 创建两列 */
+
+
+/* Left column */
+
+.leftcolumn {
+    float: left;
+    width: 15%;
+}
+
+
+
+/* 右侧 */
+
+.rightcolumn {
+    float: left;
+    width: 75%;
+    padding-left: 20px;
+}
+.card {
+    background-color: rgba(255,255,255,0.7);
+    padding: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+
+}
+.button {
+    background: #1e7db9;
+    padding: 5px 10px 6px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-box-shadow: 0 1px 3px #999;
+    -webkit-box-shadow: 0 1px 3px #999;
+    text-shadow: 0 -1px 1px #222;
+    border-bottom: 1px solid #222;
+    position: relative;
+    cursor: pointer;
+}
+ul {
+    list-style-type: none;
+}
+li a {
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+/*回复栏显示*/
+.left{
+    float: left;
+    text-align: center;
+    width: 20%;
+    border-left:1px solid grey;
+    border-right:1px solid grey;
+}
+.mid{
+    margin-left:10px;
+    float: left;
+    width: 70%;
+}
+.main:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.respon{
+    margin-top:5px;
+}
+.respon:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+/*楼层*/
+ol{
+    list-style-position: inside;
+    list-style-type:none;
+    counter-reset:sectioncounter;
+    }
+ol .mainres:before {
+    content:counter(sectioncounter) "楼";
+    counter-increment:sectioncounter;
+ }
+ul{
+    list-style-position: inside;
+    list-style-type:none;
+    counter-reset:subsectioncounter;
+    }
+ul li:before {
+    content:counter(subsectioncounter) "层";
+    counter-increment:subsectioncounter;
+}
+.sub {
+    width: 90%;
+    height: 150px;
+    resize: none;
+    font-size: 18px;
+    border: solid thin #AAAAAA;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 0px 5px;
+}
+.discussion {
+    width: 100%;
+    height: 150px;
+    resize: none;
+    font-size: 18px;
+    border: solid thin #AAAAAA;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 0px 5px;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+/* 底部 */
+.footer {
+    padding: 20px;
+    text-align: center;
+    background-image: url('/../../static/image/diduan2.png');
+    background-size:100% 100%;
+    background-repeat: no-repeat;
+    margin-top: 20px;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head> 
+    <meta charset="utf-8">
+    <title>任务详情</title> 
+    <link rel="stylesheet" type="text/css" href="..\..\static\css\task_rec_style.css">
+    <link rel="stylesheet" type="text/css" href="..\..\static\css\task_detail.css">
+</head>
+
+<body>
+    <div class="header">
+        <h1>SCHOOL Helper</h1>
+        <p><b>任务详情</b></p>
+    </div>
+
+    <div class="topnav">
+        <a href={% url 'tasks_square:task_square' %} style="margin-left: 100px;">任务广场</a>
+        <a href={% url 'hunt:up0' %}>我要发布</a>
+        <a href={% url 'hunt:edit' %} class="active">个人中心</a>
+        <a href="#" style="float:right; margin-right: 100px;"><img src="..\..\static\image\user_center.png" width="35px"
+                height="35px"></a>
+
+    </div>
+
+    <div class="detail">
+        <div class="card">
+            <h2>任务名
+                <hr>
+            </h2>{{ task.task_name }}<br>
+        </div>
+        <div class="card">
+            <h2>任务简介
+                <hr>
+            </h2>{{ task.task_sketch }}<br>
+        </div>
+        <div class="card">
+            <h2>发布者
+                <hr>
+            </h2><a
+                href={% url 'tasks_square:publisher_detail' task.publisher_id %}>{{ task.publisher.username }}</a><br>
+        </div>
+        <div class="card">
+            <h2>联系方式
+                <hr>
+            </h2>{{ task.contactpublisher }}{{ contact }}<br>
+        </div>
+        <div class="card">
+            <h2>撤销记录
+                <hr>
+            </h2>
+            {% if task.revoked_tasks.all.exists %}
+            {% for reason in task.revoked_tasks.all %}
+            匿名用户：{{ reason.revoke_reason }}<br>
+            {% endfor %}
+            {% else %}
+            暂无撤销记录
+            {% endif %}
+        </div>
+
+        <div class="card1">
+            <h2>任务状态<hr></h2>
+            <!--swf 2020年4月25日 加了if语句-->
+            {% if task.is_finished == False %}
+            <form action="{% url 'task_received:reasons_revoke' task.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" class="button" value="撤销任务" />
+            </form>
+
+            <form action="{% url 'task_received:task_finished' task.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" class="button" value="完成任务" />
+                {% else %}
+                该任务已完成<br>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

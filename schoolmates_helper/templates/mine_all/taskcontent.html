@@ -1,0 +1,340 @@
+{% extends 'base_main.html' %}
+{% load  static %}
+{% block ext_css %}
+    {{ block.super }}
+    {% if task.publisher.id != user.id and task.hunter.id != user.id or user.id == None %}
+        <link rel="stylesheet" href="{% static 'Schoolmateshelper/main/css/alltask.css' %}"
+              xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'Schoolmateshelper/main/css/mine.css' %}">
+    {% endif %}
+{% endblock %}
+{% block ext_js %}
+    {{ block.super }}
+    {% if task.publisher.id != user.id and task.hunter.id != user.id %}
+        <script type="text/javascript" src="{% static 'Schoolmateshelper/user/js/alltask.js' %}"></script>
+    {% endif %}
+    <script type="text/javascript" src="{% static 'Schoolmateshelper/user/js/alltask_hunter.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Schoolmateshelper/user/js/alltask_publisher.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Schoolmateshelper/user/js/taskcontent.js' %}"></script>
+    <script type="text/javascript" src="{% static 'Schoolmateshelper/user/js/alltask.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <div style="position:relative;height: 180%;overflow: auto;padding: 1.5rem 0;">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">任务名称</h3>
+            </div>
+            <div class="panel-body">
+                {{ task.task_name }}
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">任务详情</h3>
+            </div>
+            <p class="panel-body" style="width: 10rem;word-wrap:break-word;">
+                {{ task.task_sketch }}
+            </p>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">任务酬劳</h3>
+            </div>
+            <div class="panel-body">
+                {{ task.task_reward }}
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">任务截止时间</h3>
+            </div>
+            <div class="panel-body">
+                {{ task.task_time }}
+            </div>
+        </div>
+        {% if is_login and  task.publisher.id == user.id or is_login and task.hunter.id == user.id %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">发布方任务联系方式:{{ task.contact_type_publisher.typename }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% if task.contact_type_publisher_id == 1 %}
+                        {{ task.publisher.email }}
+                    {% elif task.contact_type_publisher_id == 2 %}
+                        {{ task.publisher.qq }}
+                    {% elif task.contact_type_publisher_id == 3 %}
+                        {{ task.publisher.wechat }}
+                    {% elif task.contact_type_publisher_id == 4 %}
+                        {{ task.publisher.tel }}
+                    {% elif task.contact_type_publisher_id == 5 %}
+                        {{ task.publisher.other }}
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if is_login and task.is_pickedup and task.publisher.id == user.id or is_login and task.is_pickedup and task.hunter.id == user.id %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">委托人任务联系方式:{{ task.contact_type_hunter.typename }}</h3>
+                </div>
+                <div class="panel-body">
+                    {% if task.contact_type_hunter_id == 1 %}
+                        {{ task.hunter.email }}
+                    {% elif task.contact_type_hunter_id == 2 %}
+                        {{ task.hunter.qq }}
+                    {% elif task.contact_type_hunter_id == 3 %}
+                        {{ task.hunter.wechat }}
+                    {% elif task.contact_type_hunter_id == 4 %}
+                        {{ task.hunter.tel }}
+                    {% elif task.contact_type_hunter_id == 5 %}
+                        {{ task.hunter.other }}
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">任务附件</h3>
+            </div>
+            <div class="panel-body">
+                {% if task.task_file %}
+                    <a href="http://{{ SERVER_NAME }}/static/uploads/{{ task.task_file }}"
+                       download="任务附件">Download</a>
+                {% else %}
+                    无附件
+                {% endif %}
+            </div>
+        </div>
+        {% if is_login and task.publisher.id == user.id %}
+            {% if task.is_finished %}
+                {% if task.comment_publisher %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">发布者任务评价</h3>
+                        </div>
+                        <div class="panel-body">
+                            {{ task.comment_publisher }}
+                        </div>
+                    </div>
+                    {% if task.comment_hunter %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">接受者任务评价</h3>
+                            </div>
+                            <div class="panel-body">
+                                {{ task.comment_hunter }}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">接受者任务评价</h3>
+                            </div>
+                            <div class="panel-body">
+                                暂无评价，请等待接受方填写
+                            </div>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">发布者任务评价</h3>
+                        </div>
+                        <div class="panel-body">
+                            暂无评价，请填写
+                        </div>
+                    </div>
+                    <form style="margin-top:-0.4rem;" method="post" enctype="multipart/form-data"
+                          action="{% url 'App:taskcontent' task.id %}"
+                          onsubmit="return checktask()">
+                        {% csrf_token %}
+                        <div class="form-group">
+                        <textarea rows="3" class="form-control" placeholder="请输入你对这次任务的评价"
+                                  id="comment_input"
+                                  name="comment"></textarea>
+                            <span id="comment_info"></span>
+                        </div>
+                        <button type="submit" class="btn  btn-warning" style="margin-top: -0.3rem">发布评价</button>
+                    </form>
+                    {% if task.comment_hunter %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">接受者任务评价</h3>
+                            </div>
+                            <div class="panel-body">
+                                {{ task.comment_hunter }}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">接受者任务评价</h3>
+                            </div>
+                            <div class="panel-body">
+                                暂无评价，等待接受方填写
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% elif task.is_pickedup == 0 %}
+                <button class="btn btn-block btn-success" onclick="modifytask({{ task.id }})"
+                        style="position: static;right:0.15rem;">修改任务
+                </button>
+            {% else %}
+                <button class="btn btn-danger btn-block" onclick="relievetask({{ task.id }})"
+                        style="position: static;right:0.15rem;">解除委托
+                </button>
+                <button class="btn btn-success btn-block" onclick="finishtask({{ task.id }})"
+                        style="position: static;right:0.15rem;">任务完成
+                </button>
+            {% endif %}
+        {% elif is_login and task.hunter.id == user.id %}
+            {% if task.is_finished %}
+                {% if task.comment_hunter %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">接受者任务评价</h3>
+                        </div>
+                        <div class="panel-body">
+                            {{ task.comment_hunter }}
+                        </div>
+                    </div>
+                    {% if task.comment_publisher %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">发布者任务评价</h3>
+                            </div>
+                            <div class="panel-body">
+                                {{ task.comment_publisher }}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">发布者任务评价</h3>
+                            </div>
+                            <div class="panel-body">
+                                暂无评价，等待接受方填写
+                            </div>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">接受者任务评价</h3>
+                        </div>
+                        <div class="panel-body">
+                            暂无评价，请填写
+                        </div>
+                    </div>
+                    <form style="margin-top:-0.4rem;" method="post" enctype="multipart/form-data"
+                          action="{% url 'App:taskcontent' task.id %}"
+                          onsubmit="return checktask()">
+                        {% csrf_token %}
+                        <div class="form-group">
+                        <textarea rows="3" class="form-control" placeholder="请输入你对这次任务的评价"
+                                  id="comment_input"
+                                  name="comment"></textarea>
+                            <span id="comment_info"></span>
+                        </div>
+                        <button type="submit" class="btn  btn-warning" style="margin-top: -0.3rem">发布评价</button>
+                    </form>
+                    {% if task.comment_publisher %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">发布者任务评价</h3>
+                            </div>
+                            <div class="panel-body">
+                                {{ task.comment_publisher }}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">发布者任务评价</h3>
+                            </div>
+                            <div class="panel-body">
+                                暂无评价，等待发布方填写
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% else %}
+                <button class="btn btn-block btn-warning" onclick="relievetask2({{ task.id }})"
+                        style="position: static;right:0.15rem;margin-top: 0.5rem">取消任务
+                </button>
+            {% endif %}
+        {% else %}
+            <button type="submit" onclick="on_click_alltask({{ task.id }},{{ is_login }})"
+                    class="btn btn-block btn-success">接受任务
+            </button>
+        {% endif %}
+        <h1 style="font-family: 华文行楷,serif;font-size: 0.6rem;color: purple;text-align: center;margin-top: 0.2rem;position: static;">
+            任务讨论区</h1>
+        {% for discuss in discuss_list %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title" style="font-size: large">{{ discuss.discussant.username }} </h3>
+                    <h4 style="font-size: small">{{ discuss.discusstime }}</h4>
+                </div>
+                <div class="panel-body" style="width: 10rem;word-wrap:break-word;">
+                    {{ discuss.discuss }}
+                </div>
+                {% for response in response_list %}
+                    {% if response.discuss_id == discuss.id %}
+                        <div class="panel-heading" style="margin-left: 0.5rem">
+                            <h3 class="panel-title"
+                                style="font-size: large">{{ response.respondent.username }}回复：{{ discuss.discussant.username }}   </h3>
+                            <h4 style="font-size: small">{{ response.responsetime }}</h4>
+                        </div>
+                        <div class="panel-body" style="width: 9.5rem;word-wrap:break-word;margin-left: 0.5rem;">
+                            {{ response.response }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                {% if is_login and is_activate %}
+                    <form method="post" enctype="multipart/form-data"
+                          action="{% url 'App:taskcontent' task.id %}"
+                          onsubmit="return checkresponse({{ discuss.id }})">
+                        {% csrf_token %}
+                        <div class="form-group">
+                        <textarea rows="3" class="form-control" placeholder="请输入你的回复"
+                                  id="response_input{{ discuss.id }}"
+                                  name="response"></textarea>
+                            <span id="response_info{{ discuss.id }}"></span>
+                        </div>
+
+                        <label style="display: none">
+                            <select name="r_discuss" style="display: none">
+                                <option value={{ discuss.id }}>a</option>
+                            </select>
+                        </label>
+                        <button type="submit" class="btn  btn-warning" style="margin-top: -0.3rem">回复帖子</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+        {% if is_login and is_activate %}
+            <form method="post" enctype="multipart/form-data"
+                  action="{% url 'App:taskcontent' task.id %}"
+                  onsubmit="return checkdiscuss()">
+                {% csrf_token %}
+                <label>自拟帖子</label>
+                <div class="form-group">
+                        <textarea rows="3" class="form-control" placeholder="请输入你想说的话"
+                                  id="discuss_input"
+                                  name="discuss"></textarea>
+                    <span id="discuss_info"></span>
+                </div>
+                <button type="submit" class="btn  btn-warning" style="margin-top: -0.3rem">发帖子</button>
+            </form>
+        {% endif %}
+    </div>
+
+
+{% endblock %}
